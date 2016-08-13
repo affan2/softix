@@ -1,0 +1,49 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2016-08-13T23:20:33",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "grant_type=client_credentials"
+        },
+        "headers": {
+          "Accept": "application/vnd.softix.api-v1.0+json",
+          "Accept-Encoding": "gzip, deflate",
+          "Accept-Language": "en_US",
+          "Authorization": "Basic <BASIC_AUTH>",
+          "Connection": "keep-alive",
+          "Content-Length": "29",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "User-Agent": "python-requests/2.10.0"
+        },
+        "method": "POST",
+        "uri": "https://api.etixdubai.com/oauth2/accesstoken"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"access_token\":\"844e4c116f7249a1b14b5f09f8ac42a0\",\"token_type\":\"Bearer\",\"expires_in\":86399,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
+        },
+        "headers": {
+          "Cache-Control": "no-cache",
+          "Content-Length": "326",
+          "Content-Type": "application/json; charset=utf-8",
+          "Date": "Sat, 13 Aug 2016 23:19:16 GMT",
+          "Expires": "-1",
+          "Pragma": "no-cache",
+          "Server": "Microsoft-IIS/7.5",
+          "X-AspNet-Version": "4.0.30319",
+          "X-Powered-By": "ASP.NET",
+          "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://api.etixdubai.com/oauth2/accesstoken"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.7.2"
+}

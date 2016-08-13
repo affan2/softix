@@ -1,4 +1,5 @@
 import sessions
+import json
 
 class SoftixCore(object):
     """
@@ -17,9 +18,7 @@ class SoftixCore(object):
         :returns `string`
         """
 
-        base_url = kwargs.get('base_url') or self.session.base_url
-        url = base_url + '/'.join(urls)
-        return url
+        return self.session.build_url(*urls, **kwargs)
 
     def authenticate(self, username, password):
         """
@@ -35,3 +34,20 @@ class SoftixCore(object):
         response = self.session.post(url, auth=creds, data=data)
         response.raise_for_status()
         self.access_token = response.json().get('access_token')
+
+    def create_customer(self, seller_code, **customer):
+        """
+        Create a new customer.
+
+        :param string seller_code: (required) Seller code provided by Dubai government
+        :returns: int id
+        """
+        url = self.build_url('customers?sellerCode={0}'.format(seller_code))
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        response = self.session.post(url, data=json.dumps(customer), headers=headers)
+        response.raise_for_status()
+        content = json.loads(response.content)
+        return content['ID']
