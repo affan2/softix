@@ -1,8 +1,12 @@
 class SoftixException(Exception):
-    pass
+    def __init__(self):
+        super(SoftixException, self).__init__()
 
 class CustomerException(Exception):
     pass
 
 class CreateCustomerException(Exception):
+    pass
+
+class SoftixError(Exception):
     pass

@@ -1,5 +1,6 @@
 import sessions
 import json
+from . import exceptions
 
 class SoftixCore(object):
     """
@@ -47,7 +48,32 @@ class SoftixCore(object):
             'Authorization': 'Bearer {0}'.format(self.access_token),
             'Content-Type': 'application/json'
         }
-        response = self.session.post(url, data=json.dumps(customer), headers=headers)
-        response.raise_for_status()
-        content = json.loads(response.content)
-        return content['ID']
+        data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
+        return data['ID']
+
+    def _get(self, url):
+        return self.session.get(url)
+
+    def _post(self, url, **kwargs):
+        return self.session.post(url, **kwargs)
+
+    def _json(self, response, status_code):
+        data = None
+        if self.is_response_successful(response, 200):
+            data = response.json()
+        return data
+    def is_response_successful(self, response, expected_status_code):
+        """
+        Validate response and return True if request was expected.
+        """
+        if response is not None:
+            if response.status_code == expected_status_code:
+                return True
+            if response.status_code >= 400:
+                raise exceptions.SoftixError(response.json().get('Message'))
+        return False
+
+    def raise_response_error(self, response):
+        """
+        Raise an exception based off of the error code.
+        """

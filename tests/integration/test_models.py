@@ -2,6 +2,7 @@ import os
 import softix
 import collections
 import betamax
+import pytest
 
 def test_authentication():
     """
@@ -17,7 +18,7 @@ def test_authentication():
     assert st.access_token
 
 
-def test_create_customer(recorder):
+def test_create_customer_():
     """
     Test creating a customer.
     """
@@ -25,7 +26,6 @@ def test_create_customer(recorder):
     username = os.environ.get('CLIENT_ID')
     password = os.environ.get('SECRET')
     seller_code = os.environ.get('SELLER_CODE')
-    st.authenticate(username, password)
     customer = {
         'salutation': '-',
         'firstname': 'ajilan',
@@ -43,4 +43,17 @@ def test_create_customer(recorder):
         'countrycode': 'IN',
         'state': 'dubai'
     }
-    assert isinstance(st.create_customer(seller_code, **customer), int)
+    recorder = betamax.Betamax(st.session)
+    match_on = ['uri', 'method', 'body', 'headers']
+    cassette_name = 'SoftixCore_create_customer'
+
+    with recorder.use_cassette(cassette_name, match_requests_on=match_on):
+        st.authenticate(username, password)
+
+        assert isinstance(st.create_customer(seller_code, **customer), int)
+
+        invalid_customer = customer.copy()
+        invalid_customer.pop('state', None)
+
+        with pytest.raises(softix.exceptions.SoftixError):
+            st.create_customer(seller_code, **invalid_customer)
