@@ -11,6 +11,19 @@ class SoftixCore(object):
         self.access_token = ''
         self.session = sessions.Session()
 
+    def basket(self, seller_code, basket_id):
+        """
+        Retrieve a basket.
+        """
+        url = self.build_url('baskets', basket_id)
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        data = {'sellerCode': seller_code}
+        basket = self._json(self._get(url, params=data, headers=headers), 200)
+        return prices
+
     def build_url(self, *urls, **kwargs):
         """
         Build a url
@@ -36,6 +49,27 @@ class SoftixCore(object):
         response.raise_for_status()
         self.access_token = response.json().get('access_token')
 
+    def create_basket(self, seller_code, performance_code, **basket):
+        """
+        Create a new basket.
+
+        :param string seller_code: (required) Seller code provided by Dubai government
+        :param string performance_code: (required) Performance code for event
+        """
+        url = self.build_url('baskets')
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        data = {
+            'Channel': 'W',
+            'Seller': seller_code,
+        }
+        data.update(basket)
+
+        data = self._json(self._post(url, data=json.dumps(data), headers=headers), 200)
+        return data
+
     def create_customer(self, seller_code, **customer):
         """
         Create a new customer.
@@ -51,10 +85,22 @@ class SoftixCore(object):
         data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
         return data['ID']
 
+    def performance_availabilities(self, seller_code, performance_code):
+        """
+        Retrieve performance price availibilties.
+        """
+        url = self.build_url('performances', performance_code, 'availabilities')
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        data = {'channel': 'W', 'sellerCode': seller_code}
+        availabilities = self._json(self._get(url, params=data, headers=headers), 200)
+        return availabilities
+
     def performance_prices(self, seller_code, performance_code):
         """
-        Retrieve performance prices. Although I do not know, currently,
-        what the hell a performance price is.
+        Retrieve performance prices. 
         """
         url = self.build_url('performances', performance_code, 'prices')
         headers = {
