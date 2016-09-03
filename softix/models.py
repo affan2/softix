@@ -51,12 +51,12 @@ class SoftixCore(object):
         data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
         return data['ID']
 
-    def performance_prices(self, seller_code):
+    def performance_prices(self, seller_code, performance_code):
         """
         Retrieve performance prices. Although I do not know, currently,
         what the hell a performance price is.
         """
-        url = self.build_url('performances', 'ETES2JN', 'prices')
+        url = self.build_url('performances', performance_code, 'prices')
         headers = {
             'Authorization': 'Bearer {0}'.format(self.access_token),
             'Content-Type': 'application/json'

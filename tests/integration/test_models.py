@@ -70,5 +70,5 @@ def test_performance_prices():
 
     with recorder.use_cassette(cassette_name, match_requests_on=match_on):
         st.authenticate(username, password)
-        performance_prices = st.performance_prices(seller_code)
+        performance_prices = st.performance_prices(seller_code, 'ETES2JN')
         assert performance_prices
