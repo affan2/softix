@@ -57,3 +57,18 @@ def test_create_customer_():
 
         with pytest.raises(softix.exceptions.SoftixError):
             st.create_customer(seller_code, **invalid_customer)
+
+
+def test_performance_prices():
+    st = softix.SoftixCore()
+    username = os.environ.get('SOFTIX_CLIENT_ID')
+    password = os.environ.get('SOFTIX_SECRET')
+    seller_code = os.environ.get('SOFTIX_SELLER_CODE')
+    recorder = betamax.Betamax(st.session)
+    cassette_name = 'SoftixCore_performance_prices'
+    match_on = ['uri', 'method', 'body', 'headers']
+
+    with recorder.use_cassette(cassette_name, match_requests_on=match_on):
+        st.authenticate(username, password)
+        performance_prices = st.performance_prices(seller_code)
+        assert performance_prices

@@ -1,0 +1,94 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2016-08-30T04:18:06",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "grant_type=client_credentials"
+        },
+        "headers": {
+          "Accept": "application/vnd.softix.api-v1.0+json",
+          "Accept-Encoding": "gzip, deflate",
+          "Accept-Language": "en_US",
+          "Authorization": "Basic <BASIC_AUTH>",
+          "Connection": "keep-alive",
+          "Content-Length": "29",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "User-Agent": "python-requests/2.10.0"
+        },
+        "method": "POST",
+        "uri": "https://api.etixdubai.com/oauth2/accesstoken"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"access_token\":\"231966b116ce4a18a6c94489a70075b9\",\"token_type\":\"Bearer\",\"expires_in\":86399,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
+        },
+        "headers": {
+          "Cache-Control": "no-cache",
+          "Content-Length": "326",
+          "Content-Type": "application/json; charset=utf-8",
+          "Date": "Tue, 30 Aug 2016 04:16:16 GMT",
+          "Expires": "-1",
+          "Pragma": "no-cache",
+          "Server": "Microsoft-IIS/7.5",
+          "X-AspNet-Version": "4.0.30319",
+          "X-Powered-By": "ASP.NET",
+          "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://api.etixdubai.com/oauth2/accesstoken"
+      }
+    },
+    {
+      "recorded_at": "2016-08-30T04:18:07",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": "application/vnd.softix.api-v1.0+json",
+          "Accept-Encoding": "gzip, deflate",
+          "Accept-Language": "en_US",
+          "Authorization": "Bearer 231966b116ce4a18a6c94489a70075b9",
+          "Connection": "keep-alive",
+          "Content-Type": "application/json",
+          "User-Agent": "python-requests/2.10.0"
+        },
+        "method": "GET",
+        "uri": "https://api.etixdubai.com/performances/ETES2JN/prices?sellerCode=ANMFZ1&channel=W"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"PriceCategories\":[{\"PriceCategoryId\":1,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":\"Reserved Seating\"},{\"PriceCategoryId\":2,\"PriceCategoryCode\":\"2\",\"PriceCategoryName\":\"Gold\"},{\"PriceCategoryId\":3,\"PriceCategoryCode\":\"3\",\"PriceCategoryName\":\"Ga1\"},{\"PriceCategoryId\":4,\"PriceCategoryCode\":\"4\",\"PriceCategoryName\":\"Tcat\"}],\"PriceTypes\":[{\"PriceTypeId\":1,\"PriceTypeCode\":\"A\",\"PriceTypeName\":\"ADULT\",\"PriceTypeDescription\":\"Adult\",\"PriceSheetId\":0,\"AdmitCount\":1,\"ConcessionCount\":0,\"OfferCode\":\"\",\"QualifierCode\":null,\"Entitlement\":null},{\"PriceTypeId\":2,\"PriceTypeCode\":\"V\",\"PriceTypeName\":\"HOLDV\",\"PriceTypeDescription\":\"Virgin Holds\",\"PriceSheetId\":0,\"AdmitCount\":1,\"ConcessionCount\":0,\"OfferCode\":\"\",\"QualifierCode\":null,\"Entitlement\":null},{\"PriceTypeId\":3,\"PriceTypeCode\":\"K\",\"PriceTypeName\":\"KCOUN\",\"PriceTypeDescription\":\"Admit Count Test (Admit Count 10)\",\"PriceSheetId\":0,\"AdmitCount\":10,\"ConcessionCount\":0,\"OfferCode\":\"\",\"QualifierCode\":null,\"Entitlement\":null}],\"BasketPrices\":null,\"TicketPrices\":{\"Prices\":[{\"PriceId\":1,\"PriceCategoryId\":1,\"PriceCategoryCode\":\"1\",\"PriceTypeId\":1,\"PriceTypeCode\":\"A\",\"PriceSheetId\":0,\"PriceNet\":10000,\"FeeTypes\":null},{\"PriceId\":2,\"PriceCategoryId\":2,\"PriceCategoryCode\":\"2\",\"PriceTypeId\":1,\"PriceTypeCode\":\"A\",\"PriceSheetId\":0,\"PriceNet\":10000,\"FeeTypes\":null},{\"PriceId\":3,\"PriceCategoryId\":3,\"PriceCategoryCode\":\"3\",\"PriceTypeId\":1,\"PriceTypeCode\":\"A\",\"PriceSheetId\":0,\"PriceNet\":10000,\"FeeTypes\":null},{\"PriceId\":4,\"PriceCategoryId\":4,\"PriceCategoryCode\":\"4\",\"PriceTypeId\":1,\"PriceTypeCode\":\"A\",\"PriceSheetId\":0,\"PriceNet\":0,\"FeeTypes\":null},{\"PriceId\":5,\"PriceCategoryId\":1,\"PriceCategoryCode\":\"1\",\"PriceTypeId\":2,\"PriceTypeCode\":\"V\",\"PriceSheetId\":0,\"PriceNet\":0,\"FeeTypes\":null},{\"PriceId\":6,\"PriceCategoryId\":2,\"PriceCategoryCode\":\"2\",\"PriceTypeId\":2,\"PriceTypeCode\":\"V\",\"PriceSheetId\":0,\"PriceNet\":0,\"FeeTypes\":null},{\"PriceId\":7,\"PriceCategoryId\":3,\"PriceCategoryCode\":\"3\",\"PriceTypeId\":2,\"PriceTypeCode\":\"V\",\"PriceSheetId\":0,\"PriceNet\":0,\"FeeTypes\":null},{\"PriceId\":8,\"PriceCategoryId\":4,\"PriceCategoryCode\":\"4\",\"PriceTypeId\":3,\"PriceTypeCode\":\"K\",\"PriceSheetId\":0,\"PriceNet\":0,\"FeeTypes\":null}],\"FeeTypes\":null},\"OfferPrices\":{\"Prices\":null,\"FeeTypes\":[{\"FeeType\":\"5\",\"FeeTypeName\":\"Handling Fee\",\"Inside\":false,\"FeeBucket\":\"hfee\",\"FeesDetailed\":[{\"FeeId\":\"1\",\"FeeSheetId\":0,\"FeeCode\":\"W\",\"FeeName\":\"WebServ\",\"FeeDescription\":\"Web Service - API\",\"FeeTotal\":0.0,\"FinanceCode\":null},{\"FeeId\":\"2\",\"FeeSheetId\":0,\"FeeCode\":\"E\",\"FeeName\":\"ETicket\",\"FeeDescription\":\"Print at Home\",\"FeeTotal\":0.0,\"FinanceCode\":null}]}]}}"
+        },
+        "headers": {
+          "Cache-Control": "no-cache",
+          "Content-Length": "2574",
+          "Content-Type": "application/json; charset=utf-8",
+          "Date": "Tue, 30 Aug 2016 04:16:16 GMT",
+          "ETag": "\"d3cf04a3-f9f2-4607-ac38-99a444bfc996\"",
+          "Expires": "-1",
+          "Pragma": "no-cache",
+          "Server": "Microsoft-IIS/7.5",
+          "Via": "http/1.1 SeatMapAPIProxy",
+          "X-AspNet-Version": "4.0.30319",
+          "X-Powered-By": "ASP.NET",
+          "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://api.etixdubai.com/performances/ETES2JN/prices?sellerCode=ANMFZ1&channel=W"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.7.2"
+}

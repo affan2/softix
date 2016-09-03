@@ -20,6 +20,8 @@ def softixcore():
     """
     sc = softix.SoftixCore()
     sc.session = create_mocked_session()
+    sc.session.get.return_value = None
+    sc.session.post.return_value = None
     sc.build_url = build_url
     return sc
 

@@ -23,7 +23,7 @@ class SoftixCore(object):
 
     def authenticate(self, username, password):
         """
-        Generate access token for remainder of session
+        Generate access token and update the session headers.
         """
         creds = (username, password)
         url = self.build_url('oauth2', 'accesstoken')
@@ -51,8 +51,22 @@ class SoftixCore(object):
         data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
         return data['ID']
 
-    def _get(self, url):
-        return self.session.get(url)
+    def performance_prices(self, seller_code):
+        """
+        Retrieve performance prices. Although I do not know, currently,
+        what the hell a performance price is.
+        """
+        url = self.build_url('performances', 'ETES2JN', 'prices')
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        data = {'channel': 'W', 'sellerCode': seller_code}
+        prices = self._json(self._get(url, params=data, headers=headers), 200)
+        return prices
+
+    def _get(self, url, **kwargs):
+        return self.session.get(url, **kwargs)
 
     def _post(self, url, **kwargs):
         return self.session.post(url, **kwargs)
