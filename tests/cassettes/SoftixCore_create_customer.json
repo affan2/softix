@@ -1,7 +1,7 @@
 {
   "http_interactions": [
     {
-      "recorded_at": "2016-08-20T21:08:51",
+      "recorded_at": "2016-10-16T18:19:14",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -23,13 +23,13 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"access_token\":\"f0cfded1eb304d698cfb140ca680c54f\",\"token_type\":\"Bearer\",\"expires_in\":86400,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
+          "string": "{\"access_token\":\"469199df25d64469936479026b0068de\",\"token_type\":\"Bearer\",\"expires_in\":86400,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
         },
         "headers": {
           "Cache-Control": "no-cache",
           "Content-Length": "326",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 20 Aug 2016 21:07:28 GMT",
+          "Date": "Sun, 16 Oct 2016 18:16:57 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
@@ -45,17 +45,17 @@
       }
     },
     {
-      "recorded_at": "2016-08-20T21:08:52",
+      "recorded_at": "2016-10-16T18:19:14",
       "request": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"city\": \"dubai\", \"internationalcode\": \"971\", \"countrycode\": \"IN\", \"firstname\": \"ajilan\", \"areacode\": \"unknown\", \"lastname\": \"MA\", \"dateofbirth\": \"4-23-2015\", \"state\": \"dubai\", \"phonenumber\": \"507156120\", \"addressline2\": \"-\", \"addressline1\": \"-\", \"salutation\": \"-\", \"nationality\": \"IN\", \"email\": \"unknown@unknown.com\", \"addressline3\": \"-\"}"
+          "string": "{\"city\": \"dubai\", \"internationalcode\": \"971\", \"firstname\": \"ajilan\", \"countrycode\": \"IN\", \"areacode\": \"unknown\", \"lastname\": \"MA\", \"dateofbirth\": \"4-23-2015\", \"state\": \"dubai\", \"phonenumber\": \"507156120\", \"addressline3\": \"-\", \"addressline1\": \"-\", \"salutation\": \"-\", \"addressline2\": \"-\", \"nationality\": \"IN\", \"email\": \"unknown@unknown.com\"}"
         },
         "headers": {
           "Accept": "application/vnd.softix.api-v1.0+json",
           "Accept-Encoding": "gzip, deflate",
           "Accept-Language": "en_US",
-          "Authorization": "Bearer f0cfded1eb304d698cfb140ca680c54f",
+          "Authorization": "Bearer 469199df25d64469936479026b0068de",
           "Connection": "keep-alive",
           "Content-Length": "339",
           "Content-Type": "application/json",
@@ -67,13 +67,13 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"ID\":1293759,\"Account\":1278011,\"AFile\":\"tel\"}"
+          "string": "{\"ID\":1538078,\"Account\":1523045,\"AFile\":\"tel\"}"
         },
         "headers": {
           "Cache-Control": "no-cache",
           "Content-Length": "46",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 20 Aug 2016 21:07:28 GMT",
+          "Date": "Sun, 16 Oct 2016 18:16:57 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
@@ -85,51 +85,6 @@
         "status": {
           "code": 200,
           "message": "OK"
-        },
-        "url": "https://api.etixdubai.com/customers?sellerCode=ANMFZ1"
-      }
-    },
-    {
-      "recorded_at": "2016-08-20T21:08:54",
-      "request": {
-        "body": {
-          "encoding": "utf-8",
-          "string": "{\"city\": \"dubai\", \"internationalcode\": \"971\", \"countrycode\": \"IN\", \"firstname\": \"ajilan\", \"areacode\": \"unknown\", \"lastname\": \"MA\", \"dateofbirth\": \"4-23-2015\", \"phonenumber\": \"507156120\", \"addressline3\": \"-\", \"addressline1\": \"-\", \"salutation\": \"-\", \"addressline2\": \"-\", \"nationality\": \"IN\", \"email\": \"unknown@unknown.com\"}"
-        },
-        "headers": {
-          "Accept": "application/vnd.softix.api-v1.0+json",
-          "Accept-Encoding": "gzip, deflate",
-          "Accept-Language": "en_US",
-          "Authorization": "Bearer f0cfded1eb304d698cfb140ca680c54f",
-          "Connection": "keep-alive",
-          "Content-Length": "321",
-          "Content-Type": "application/json",
-          "User-Agent": "python-requests/2.10.0"
-        },
-        "method": "POST",
-        "uri": "https://api.etixdubai.com/customers?sellerCode=ANMFZ1"
-      },
-      "response": {
-        "body": {
-          "encoding": "utf-8",
-          "string": "{\"Code\":2300,\"Message\":\"Not all customer details were provided or some details were incorrect.\",\"Reference\":\"http://api.softix.pricing/docs\"}"
-        },
-        "headers": {
-          "Cache-Control": "no-cache",
-          "Content-Length": "141",
-          "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 20 Aug 2016 21:07:31 GMT",
-          "Expires": "-1",
-          "Pragma": "no-cache",
-          "Server": "Microsoft-IIS/7.5",
-          "Via": "http/1.1 CustomerAPIProxy",
-          "X-AspNet-Version": "4.0.30319",
-          "X-Powered-By": "ASP.NET",
-          "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
-        },
-        "status": {
-          "code": 400,
-          "message": "Bad Request"
         },
         "url": "https://api.etixdubai.com/customers?sellerCode=ANMFZ1"
       }

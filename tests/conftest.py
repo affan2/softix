@@ -8,8 +8,8 @@ from betamax_matchers import json_body
 from betamax_serializers import pretty_json
 
 betamax.Betamax.register_request_matcher(json_body.JSONBodyMatcher)
-credentials = [os.environ.get('CLIENT_ID', 'foo').encode(),
-               os.environ.get('SECRET', 'foo').encode()]
+credentials = [os.environ.get('SOFTIX_CLIENT_ID', 'foo').encode(),
+               os.environ.get('SOFTIX_SECRET', 'foo').encode()]
 
 @pytest.fixture(scope='module')
 def softixcore():
@@ -44,6 +44,27 @@ def create_mocked_session():
     """
     session_mock = mock.create_autospec(softix.sessions.Session)
     return session_mock
+
+@pytest.fixture
+def valid_customer():
+    customer = {
+        'salutation': '-',
+        'firstname': 'ajilan',
+        'lastname': 'MA',
+        'nationality': 'IN',
+        'email': 'unknown@unknown.com',
+        'dateofbirth': '4-23-2015',
+        'internationalcode': '971',
+        'areacode': 'unknown',
+        'phonenumber': '507156120',
+        'addressline1': '-',
+        'addressline2': '-',
+        'addressline3': '-',
+        'city': 'dubai',
+        'countrycode': 'IN',
+        'state': 'dubai'
+    }
+    return customer
 
 betamax.Betamax.register_request_matcher(json_body.JSONBodyMatcher)
 betamax.Betamax.register_serializer(pretty_json.PrettyJSONSerializer)

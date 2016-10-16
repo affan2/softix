@@ -10,3 +10,12 @@ class CreateCustomerException(Exception):
 
 class SoftixError(Exception):
     pass
+
+class MissingRequiredCustomerField(SoftixError):
+    pass
+
+class InvalidCustomerField(SoftixError):
+    pass
+
+class AuthenticationError(SoftixError):
+    pass

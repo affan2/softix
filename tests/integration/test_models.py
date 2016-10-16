@@ -4,13 +4,23 @@ import collections
 import betamax
 import pytest
 
-def test_authentication():
+@pytest.fixture
+def username():
+    return os.environ.get('SOFTIX_CLIENT_ID', 'foo')
+
+@pytest.fixture
+def password():
+    return os.environ.get('SOFTIX_SECRET', 'bar')
+
+@pytest.fixture
+def seller_code():
+    return os.environ.get('SOFTIX_SELLER_CODE')
+
+def test_authentication(username, password):
     """
     Test generating a token.
     """
     st = softix.SoftixCore()
-    username = os.environ.get('CLIENT_ID', 'foo')
-    password = os.environ.get('SECRET', 'bar')
     recorder = betamax.Betamax(st.session)
     match_on = ['uri', 'method', 'body', 'headers']
     with recorder.use_cassette('SoftixCore_authenticate', match_requests_on=match_on):
@@ -18,14 +28,11 @@ def test_authentication():
     assert st.access_token
 
 
-def test_create_customer_():
+def test_create_customer(username, password, seller_code):
     """
     Test creating a customer.
     """
     st = softix.SoftixCore()
-    username = os.environ.get('CLIENT_ID')
-    password = os.environ.get('SECRET')
-    seller_code = os.environ.get('SELLER_CODE')
     customer = {
         'salutation': '-',
         'firstname': 'ajilan',
@@ -55,7 +62,7 @@ def test_create_customer_():
         invalid_customer = customer.copy()
         invalid_customer.pop('state', None)
 
-        with pytest.raises(softix.exceptions.SoftixError):
+        with pytest.raises(softix.exceptions.MissingRequiredCustomerField):
             st.create_customer(seller_code, **invalid_customer)
 
 
@@ -103,4 +110,5 @@ def test_create_basket():
         st.authenticate(username, password)
         performance_prices = st.create_basket(seller_code, 'ETES2JN', **basket)
         assert performance_prices
+
 

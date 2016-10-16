@@ -1,6 +1,49 @@
+import collections
 import sessions
 import json
 from . import exceptions
+
+def uppercase_keys(item, *keys):
+    item_copy = item.copy()
+    for key in keys:
+        if key in item_copy:
+            item_copy[key] = item_copy.get(key, '').upper()
+    return item_copy
+
+def validate_customer(customer):
+    required_fields = (
+        'salutation',
+        'firstname',
+        'lastname',
+        'nationality',
+        'email',
+        'dateofbirth',
+        'internationalcode',
+        'areacode',
+        'phonenumber',
+        'addressline1',
+        'addressline2',
+        'addressline3',
+        'city',
+        'countrycode',
+        'state',
+    )
+    for field in required_fields:
+        if field not in customer:
+            raise exceptions.MissingRequiredCustomerField(
+                'Missing "{0}"'.format(field)
+            )
+    if not two_characters_long(customer.get('countrycode')):
+        raise exceptions.InvalidCustomerField(
+            '{0} needs to be a 2 characters'.format('countrycode')
+            )
+    if not two_characters_long(customer.get('nationality')):
+        raise exceptions.InvalidCustomerField(
+            '{0} needs to be a 2 characters'.format('nationality')
+            )
+
+def two_characters_long(data):
+    return True if len(data) == 2 else False
 
 class SoftixCore(object):
     """
@@ -47,14 +90,16 @@ class SoftixCore(object):
 
         response = self.session.post(url, auth=creds, data=data)
         response.raise_for_status()
-        self.access_token = response.json().get('access_token')
+        try:
+            self.access_token = response.json()['access_token']
+        except KeyError:
+            raise exceptions.AuthenticationError('Missing access_token from API')
 
-    def create_basket(self, seller_code, performance_code, **basket):
+    def create_basket(self, seller_code, performance_code, section, demands):
         """
         Create a new basket.
 
-        :param string seller_code: (required) Seller code provided by Dubai government
-        :param string performance_code: (required) Performance code for event
+        Section/Area is the group of seats
         """
         url = self.build_url('baskets')
         headers = {
@@ -64,11 +109,13 @@ class SoftixCore(object):
         data = {
             'Channel': 'W',
             'Seller': seller_code,
+            'Performancecode': performance_code,
+            'Area': '',
+            'holdcode': '',
+            'Demand': [ self.build_demand_request(d) for d in demands]
         }
-        data.update(basket)
-
-        data = self._json(self._post(url, data=json.dumps(data), headers=headers), 200)
-        return data
+        response = self._json(self._post(url, data=json.dumps(data), headers=headers), 200)
+        return response
 
     def create_customer(self, seller_code, **customer):
         """
@@ -77,6 +124,8 @@ class SoftixCore(object):
         :param string seller_code: (required) Seller code provided by Dubai government
         :returns: int id
         """
+        validate_customer(customer)
+        customer = uppercase_keys(customer, 'nationality', 'countrycode')
         url = self.build_url('customers?sellerCode={0}'.format(seller_code))
         headers = {
             'Authorization': 'Bearer {0}'.format(self.access_token),
@@ -137,3 +186,31 @@ class SoftixCore(object):
         """
         Raise an exception based off of the error code.
         """
+
+
+    def build_demand_request(self, demand):
+        demand_request = {
+            'PriceTypeCode': demand.price_type_code,
+            'Quantity': demand.quantity
+        }
+        return demand_request
+
+class Demand(object):
+
+    def __init__(self, price_type_code, price_type_name, quantity):
+        self.price_type_code = str(price_type_code)
+        self.price_type_name = str(price_type_name)
+        self.quantity = int(quantity)
+
+
+class DemandRequest(dict):
+    def __init__(self, demand):
+        self.PriceTypeCode = demand.price_type_code
+        self.Quantity = demand.quantity
+
+
+class Fee(object):
+
+    def __init__(self, fee_type, code):
+        self.type = fee_type
+        self.code = code

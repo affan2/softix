@@ -1,1 +1,1 @@
-from .models import SoftixCore
+from .models import SoftixCore, Demand

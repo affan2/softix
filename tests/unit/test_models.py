@@ -1,4 +1,5 @@
 import softix
+import pytest
 
 def test_authenticate(softixcore):
     """
@@ -23,3 +24,37 @@ def test_performance_prices(softixcore):
         url,
         data=data
     )
+
+def test_uppercase_keys():
+    mydict = {
+        'nationality': 'in',
+        'countrycode': 'ae',
+        'firstname': 'matt'
+    }
+    expected_dict = {
+        'nationality': 'IN',
+        'countrycode': 'AE',
+        'firstname': 'matt'
+    }
+
+    assert softix.models.uppercase_keys(mydict, 'nationality', 'countrycode') == expected_dict
+
+def test_validate_customer(valid_customer):
+    assert softix.models.validate_customer(valid_customer) is None
+
+def test_validate_customer_missing_required_field(valid_customer):
+    with pytest.raises(softix.exceptions.MissingRequiredCustomerField) as exception:
+        customer_missing_email = valid_customer.copy().pop('email')
+        softix.models.validate_customer(customer_missing_email)
+
+def test_validate_customer_invalid_country_code(valid_customer):
+    customer = valid_customer.copy()
+    customer['countrycode'] = 'more_than_two_characters'
+    with pytest.raises(softix.exceptions.InvalidCustomerField) as exception:
+        softix.models.validate_customer(customer)
+
+def test_validate_customer_invalid_nationality(valid_customer):
+    customer = valid_customer.copy()
+    customer['nationality'] = 'more_than_two_characters'
+    with pytest.raises(softix.exceptions.InvalidCustomerField) as exception:
+        softix.models.validate_customer(customer)
