@@ -1,7 +1,7 @@
 {
   "http_interactions": [
     {
-      "recorded_at": "2016-09-03T19:45:05",
+      "recorded_at": "2016-10-24T00:15:47",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -23,13 +23,13 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"access_token\":\"c896bd84c2704771bd1fdcbb24642fa4\",\"token_type\":\"Bearer\",\"expires_in\":86400,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
+          "string": "{\"access_token\":\"9a9a4ab71a5c4554b8df5063bef99ce1\",\"token_type\":\"Bearer\",\"expires_in\":86400,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
         },
         "headers": {
           "Cache-Control": "no-cache",
           "Content-Length": "326",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 03 Sep 2016 19:43:16 GMT",
+          "Date": "Mon, 24 Oct 2016 00:13:25 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
@@ -45,19 +45,19 @@
       }
     },
     {
-      "recorded_at": "2016-09-03T19:45:07",
+      "recorded_at": "2016-10-24T00:15:47",
       "request": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"Area\": \"SGA\", \"Channel\": \"W\", \"Seller\": \"ANMFZ1\"}"
+          "string": "{\"Area\": \"SGA\", \"Fees\": [{\"Code\": \"W\", \"Type\": \"5\"}], \"Seller\": \"ANMFZ1\", \"Performancecode\": \"ETES0000004EL\", \"Demand\": [{\"Admits\": 1, \"PriceTypeCode\": \"Q\", \"Customer\": {}, \"Quantity\": 1}], \"holdcode\": \"\", \"Channel\": \"W\"}"
         },
         "headers": {
           "Accept": "application/vnd.softix.api-v1.0+json",
           "Accept-Encoding": "gzip, deflate",
           "Accept-Language": "en_US",
-          "Authorization": "Bearer c896bd84c2704771bd1fdcbb24642fa4",
+          "Authorization": "Bearer 9a9a4ab71a5c4554b8df5063bef99ce1",
           "Connection": "keep-alive",
-          "Content-Length": "51",
+          "Content-Length": "221",
           "Content-Type": "application/json",
           "User-Agent": "python-requests/2.10.0"
         },
@@ -67,13 +67,13 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"Code\":2260,\"Message\":\"One or more parameters in the offer request were invalid.\",\"Hint\":\"Demand is a required field\"}"
+          "string": "{\"Id\":\"28209-32903106\",\"Offers\":[{\"Id\":\"1\",\"InventorySource\":null,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategory\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"Demand\":[{\"PriceTypeId\":null,\"PriceTypeCode\":\"Q\",\"PriceType\":null,\"Quantity\":1,\"Admits\":1,\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Customer\":{\"Id\":null,\"AFile\":null,\"Account\":null,\"OrgCustomerId\":null},\"Prices\":[{\"Id\":null,\"SheetId\":0,\"Net\":10000,\"Fees\":[{\"Id\":null,\"Bucket\":null,\"Code\":null,\"FinanceCode\":null,\"Inside\":false,\"Name\":null,\"SheetId\":0,\"Total\":0,\"Type\":\"1\",\"TypeName\":\"BookingFee\"}]}]}],\"Seats\":[{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"14\",\"RzStr\":\"RGA/Q14-\"}],\"Fees\":[{\"Id\":null,\"Bucket\":null,\"Code\":\"W\",\"FinanceCode\":null,\"Inside\":false,\"Name\":null,\"SheetId\":0,\"Total\":0,\"Type\":\"5\",\"TypeName\":\"HandlingFee\"}]}],\"Fees\":[]}"
         },
         "headers": {
           "Cache-Control": "no-cache",
-          "Content-Length": "119",
+          "Content-Length": "885",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 03 Sep 2016 19:43:18 GMT",
+          "Date": "Mon, 24 Oct 2016 00:13:25 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
@@ -81,8 +81,8 @@
           "X-Powered-By": "ASP.NET"
         },
         "status": {
-          "code": 400,
-          "message": "Bad Request"
+          "code": 201,
+          "message": "Created"
         },
         "url": "https://api.etixdubai.com/baskets"
       }

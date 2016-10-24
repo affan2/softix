@@ -3,6 +3,7 @@ import sessions
 import json
 from . import exceptions
 
+
 def uppercase_keys(item, *keys):
     item_copy = item.copy()
     for key in keys:
@@ -56,16 +57,18 @@ class SoftixCore(object):
 
     def basket(self, seller_code, basket_id):
         """
-        Retrieve a basket.
+        Get basket.
+
+        An exception may raise if the basket has expired:
+          'No basket found for the requested basket id'
         """
         url = self.build_url('baskets', basket_id)
         headers = {
             'Authorization': 'Bearer {0}'.format(self.access_token),
             'Content-Type': 'application/json'
         }
-        data = {'sellerCode': seller_code}
-        basket = self._json(self._get(url, params=data, headers=headers), 200)
-        return prices
+        data = self._json(self._get(url, params={'sellerCode': seller_code}, headers=headers), 200)
+        return data
 
     def build_url(self, *urls, **kwargs):
         """
@@ -95,7 +98,8 @@ class SoftixCore(object):
         except KeyError:
             raise exceptions.AuthenticationError('Missing access_token from API')
 
-    def create_basket(self, seller_code, performance_code, section, demands):
+
+    def create_basket(self, seller_code, performance_code, section, demands, fees):
         """
         Create a new basket.
 
@@ -110,11 +114,12 @@ class SoftixCore(object):
             'Channel': 'W',
             'Seller': seller_code,
             'Performancecode': performance_code,
-            'Area': '',
+            'Area': section,
             'holdcode': '',
-            'Demand': [ self.build_demand_request(d) for d in demands]
+            'Demand': [ self.build_demand_request(d) for d in demands],
+            'Fees': [self.build_fee_request(f) for f in fees]
         }
-        response = self._json(self._post(url, data=json.dumps(data), headers=headers), 200)
+        response = self._json(self._post(url, data=json.dumps(data), headers=headers), 201)
         return response
 
     def create_customer(self, seller_code, **customer):
@@ -168,7 +173,7 @@ class SoftixCore(object):
 
     def _json(self, response, status_code):
         data = None
-        if self.is_response_successful(response, 200):
+        if self.is_response_successful(response, status_code):
             data = response.json()
         return data
     def is_response_successful(self, response, expected_status_code):
@@ -182,25 +187,28 @@ class SoftixCore(object):
                 raise exceptions.SoftixError(response.json().get('Message'))
         return False
 
-    def raise_response_error(self, response):
-        """
-        Raise an exception based off of the error code.
-        """
-
-
     def build_demand_request(self, demand):
         demand_request = {
             'PriceTypeCode': demand.price_type_code,
-            'Quantity': demand.quantity
+            'Quantity': demand.quantity,
+            'Admits': demand.admits,
+            'Customer': {}
         }
         return demand_request
 
+    def build_fee_request(self, fee):
+        fee_request = {
+            'Type': fee.type,
+            'Code': fee.code,
+        }
+        return fee_request
+
 class Demand(object):
 
-    def __init__(self, price_type_code, price_type_name, quantity):
+    def __init__(self, price_type_code, quantity, admits):
         self.price_type_code = str(price_type_code)
-        self.price_type_name = str(price_type_name)
         self.quantity = int(quantity)
+        self.admits = int(admits)
 
 
 class DemandRequest(dict):

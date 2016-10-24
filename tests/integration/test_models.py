@@ -93,6 +93,7 @@ def test_performance_prices():
         st.authenticate(username, password)
         performance_prices = st.performance_prices(seller_code, 'ETES2JN')
         assert performance_prices
+        assert isinstance(performance_prices, dict)
 
 def test_create_basket():
     st = softix.SoftixCore()
@@ -102,13 +103,11 @@ def test_create_basket():
     recorder = betamax.Betamax(st.session)
     cassette_name = 'SoftixCore_create_basket'
     match_on = ['uri', 'method', 'body', 'headers']
-    basket = {
-        'Area': 'SGA'
-    }
 
     with recorder.use_cassette(cassette_name, match_requests_on=match_on):
         st.authenticate(username, password)
-        performance_prices = st.create_basket(seller_code, 'ETES2JN', **basket)
-        assert performance_prices
-
-
+        demands = [softix.models.Demand(price_type_code='Q', quantity=1, admits=1)]
+        fees = [softix.Fee('5', 'W')]
+        basket = st.create_basket(seller_code, 'ETES0000004EL', 'SGA', demands, fees)
+        assert basket
+        assert isinstance(basket, dict)
