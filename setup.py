@@ -4,7 +4,7 @@ requirements = ('requests')
 setup(
     name='softix',
     packages=['softix'],
-    version='0.0.3',
+    version='0.0.4',
     author='Matt Chung',
     author_email='matt@itsmemattchung.com',
     description='Python client library to interface with Dubai ticketing API',

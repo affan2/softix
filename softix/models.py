@@ -1,4 +1,5 @@
-import collections
+import os
+import datetime
 import sessions
 import json
 from . import exceptions
@@ -83,6 +84,9 @@ class SoftixCore(object):
     def authenticate(self, username, password):
         """
         Generate access token and update the session headers.
+
+        We update the default response from the API to include an
+        expiration_date to allow us to create new tokens
         """
         creds = (username, password)
         url = self.build_url('oauth2', 'accesstoken')
@@ -91,10 +95,18 @@ class SoftixCore(object):
             'grant_type': 'client_credentials'
         }
 
-        response = self.session.post(url, auth=creds, data=data)
-        response.raise_for_status()
+        response = self._json(self._post(url, auth=creds, data=data), 200)
+        now = datetime.datetime.utcnow()
+        access_token = response['access_token']
+        expires_in = response['expires_in']
+        expiration_date = datetime.datetime.utcnow() + datetime.timedelta(0, expires_in)
+        authentication_data = response.copy()
+        authentication_data.update({
+            'expiration_date': expiration_date.isoformat()
+        })
         try:
-            self.access_token = response.json()['access_token']
+            self.access_token = response['access_token']
+            return authentication_data
         except KeyError:
             raise exceptions.AuthenticationError('Missing access_token from API')
 
