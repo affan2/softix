@@ -91,7 +91,8 @@ class SoftixCore(object):
             'grant_type': 'client_credentials'
         }
 
-        response = self._json(self._post(url, auth=creds, data=data), 200)
+        response = self._json(self._post(url, auth=creds, headers=None, data=data), 200)
+        authentication = Authentication(response)
         now = datetime.datetime.utcnow()
         access_token = response['access_token']
         expires_in = response['expires_in']
@@ -255,6 +256,11 @@ class Payment(object):
             'MeansOfPayment': self.means_of_payment
         }
         return request
+
+class Authentication(dict):
+    def __init__(self, data):
+        super(Authentication, self).__init__(data)
+
 
 class Customer(object):
     def __init__(self, customer_data):
