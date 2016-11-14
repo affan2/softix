@@ -57,7 +57,7 @@ def test_create_customer(username, password, seller_code):
     with recorder.use_cassette(cassette_name, match_requests_on=match_on):
         st.authenticate(username, password)
 
-        assert isinstance(st.create_customer(seller_code, **customer), int)
+        assert isinstance(st.create_customer(seller_code, **customer), dict)
 
         invalid_customer = customer.copy()
         invalid_customer.pop('state', None)
