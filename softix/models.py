@@ -128,8 +128,8 @@ class SoftixCore(object):
             'Performancecode': performance_code,
             'Area': section,
             'holdcode': '',
-            'Demand': [ self.build_demand_request(d) for d in demands],
-            'Fees': [self.build_fee_request(f) for f in fees]
+            'Demand': [demand.to_request() for demand in demands],
+            'Fees': [fee.to_request() for fee in fees]
         }
         response = self._json(self._post(url, data=json.dumps(data), headers=headers), 201)
         return response
@@ -149,8 +149,7 @@ class SoftixCore(object):
             'Content-Type': 'application/json'
         }
         data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
-        return data['ID']
-
+        return data
     def performance_availabilities(self, seller_code, performance_code):
         """
         Retrieve performance price availibilties.
@@ -177,6 +176,23 @@ class SoftixCore(object):
         prices = self._json(self._get(url, params=data, headers=headers), 200)
         return prices
 
+    def purchase_basket(self, seller_code, basket_id):
+        """
+        Purchase a basket.
+        """
+        url = self.build_url('Baskets', basket_id, 'purchase')
+        basket = Basket(self.basket(seller_code, basket_id))
+        data = {
+            'Seller': seller_code,
+            'Payments': [Payment(basket.total).to_request()]
+        }
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        response = self._json(self._post(url, data=json.dumps(data), headers=headers), 201)
+        return response
+
     def _get(self, url, **kwargs):
         return self.session.get(url, **kwargs)
 
@@ -188,6 +204,7 @@ class SoftixCore(object):
         if self.is_response_successful(response, status_code):
             data = response.json()
         return data
+
     def is_response_successful(self, response, expected_status_code):
         """
         Validate response and return True if request was expected.
@@ -199,22 +216,6 @@ class SoftixCore(object):
                 raise exceptions.SoftixError(response.json().get('Message'))
         return False
 
-    def build_demand_request(self, demand):
-        demand_request = {
-            'PriceTypeCode': demand.price_type_code,
-            'Quantity': demand.quantity,
-            'Admits': demand.admits,
-            'Customer': {}
-        }
-        return demand_request
-
-    def build_fee_request(self, fee):
-        fee_request = {
-            'Type': fee.type,
-            'Code': fee.code,
-        }
-        return fee_request
-
 class Demand(object):
 
     def __init__(self, price_type_code, quantity, admits):
@@ -222,11 +223,14 @@ class Demand(object):
         self.quantity = int(quantity)
         self.admits = int(admits)
 
-
-class DemandRequest(dict):
-    def __init__(self, demand):
-        self.PriceTypeCode = demand.price_type_code
-        self.Quantity = demand.quantity
+    def to_request(self):
+        request = {
+            'PriceTypeCode': self.price_type_code,
+            'Quantity': self.quantity,
+            'Admits': self.admits,
+            'Customer': {}
+        }
+        return request
 
 
 class Fee(object):
@@ -234,3 +238,34 @@ class Fee(object):
     def __init__(self, fee_type, code):
         self.type = fee_type
         self.code = code
+
+    def to_request(self):
+        fee = {
+            'Type': self.type,
+            'Code': self.code,
+        }
+        return fee
+
+class Payment(object):
+    def __init__(self, amount, means_of_payment='EXTERNAL'):
+        self.amount = amount
+        self.means_of_payment = means_of_payment
+
+    def to_request(self):
+        request = {
+            'Amount': self.amount,
+            'MeansOfPayment': self.means_of_payment
+        }
+        return request
+
+class Customer(object):
+    def __init__(self, customer_data):
+        self.customer_data = customer_data
+
+class Basket(dict):
+    def __init__(self, data):
+        super(Basket, self).__init__(data)
+
+    @property
+    def total(self):
+        return int(self['Offers'][0]['Demand'][0]['Prices'][0]['Net'])
