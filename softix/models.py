@@ -150,6 +150,22 @@ class SoftixCore(object):
         }
         data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
         return data
+
+    def order(self, seller_code, order_id):
+        """
+        View order details.
+        """
+        url = self.build_url('orders', order_id)
+        data = {
+            'sellerCode': seller_code
+        }
+        headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        order = self._json(self._get(url, params=data, headers=headers), 200)
+        return order
+
     def performance_availabilities(self, seller_code, performance_code):
         """
         Retrieve performance price availibilties.
