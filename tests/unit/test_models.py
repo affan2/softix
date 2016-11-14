@@ -17,12 +17,17 @@ def test_performance_prices(softixcore):
     """
     Verify the URL called.
     """
-    softixcore.performance_prices('fake_seller_code')
-    data = {'channel': 'W', 'sellerCode': 'fake_seller_code'}
+    softixcore.performance_prices('seller-code', 'ETES2JN')
+    data = {'channel': 'W', 'sellerCode': 'seller-code'}
     url = 'https://api.etixdubai.com/performances/ETES2JN/prices'
+    headers = {
+        'Authorization': 'Bearer ',
+        'Content-Type': 'application/json'
+    }
     softixcore.session.get.assert_called_once_with(
         url,
-        data=data
+        params=data,
+        headers=headers
     )
 
 def test_uppercase_keys():

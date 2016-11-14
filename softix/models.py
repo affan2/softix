@@ -64,11 +64,7 @@ class SoftixCore(object):
           'No basket found for the requested basket id'
         """
         url = self.build_url('baskets', basket_id)
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
-        data = self._json(self._get(url, params={'sellerCode': seller_code}, headers=headers), 200)
+        data = self._json(self._get(url, params={'sellerCode': seller_code}), 200)
         return data
 
     def build_url(self, *urls, **kwargs):
@@ -118,10 +114,6 @@ class SoftixCore(object):
         Section/Area is the group of seats
         """
         url = self.build_url('baskets')
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
         data = {
             'Channel': 'W',
             'Seller': seller_code,
@@ -131,7 +123,7 @@ class SoftixCore(object):
             'Demand': [demand.to_request() for demand in demands],
             'Fees': [fee.to_request() for fee in fees]
         }
-        response = self._json(self._post(url, data=json.dumps(data), headers=headers), 201)
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
     def create_customer(self, seller_code, **customer):
@@ -144,11 +136,7 @@ class SoftixCore(object):
         validate_customer(customer)
         customer = uppercase_keys(customer, 'nationality', 'countrycode')
         url = self.build_url('customers?sellerCode={0}'.format(seller_code))
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
-        data = self._json(self._post(url, data=json.dumps(customer), headers=headers), 200)
+        data = self._json(self._post(url, data=json.dumps(customer)), 200)
         return data
 
     def order(self, seller_code, order_id):
@@ -159,11 +147,7 @@ class SoftixCore(object):
         data = {
             'sellerCode': seller_code
         }
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
-        order = self._json(self._get(url, params=data, headers=headers), 200)
+        order = self._json(self._get(url, params=data), 200)
         return order
 
     def performance_availabilities(self, seller_code, performance_code):
@@ -171,12 +155,8 @@ class SoftixCore(object):
         Retrieve performance price availibilties.
         """
         url = self.build_url('performances', performance_code, 'availabilities')
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
         data = {'channel': 'W', 'sellerCode': seller_code}
-        availabilities = self._json(self._get(url, params=data, headers=headers), 200)
+        availabilities = self._json(self._get(url, params=data), 200)
         return availabilities
 
     def performance_prices(self, seller_code, performance_code):
@@ -184,12 +164,8 @@ class SoftixCore(object):
         Retrieve performance prices. 
         """
         url = self.build_url('performances', performance_code, 'prices')
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
         data = {'channel': 'W', 'sellerCode': seller_code}
-        prices = self._json(self._get(url, params=data, headers=headers), 200)
+        prices = self._json(self._get(url, params=data), 200)
         return prices
 
     def purchase_basket(self, seller_code, basket_id):
@@ -202,17 +178,23 @@ class SoftixCore(object):
             'Seller': seller_code,
             'Payments': [Payment(basket.total).to_request()]
         }
-        headers = {
-            'Authorization': 'Bearer {0}'.format(self.access_token),
-            'Content-Type': 'application/json'
-        }
-        response = self._json(self._post(url, data=json.dumps(data), headers=headers), 201)
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
     def _get(self, url, **kwargs):
+        default_headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        kwargs['headers'] = kwargs.get('headers', default_headers)
         return self.session.get(url, **kwargs)
 
     def _post(self, url, **kwargs):
+        default_headers = {
+            'Authorization': 'Bearer {0}'.format(self.access_token),
+            'Content-Type': 'application/json'
+        }
+        kwargs['headers'] = kwargs.get('headers', default_headers)
         return self.session.post(url, **kwargs)
 
     def _json(self, response, status_code):
