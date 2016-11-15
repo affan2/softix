@@ -86,27 +86,34 @@ class SoftixCore(object):
         """
         creds = (username, password)
         url = self.build_url('oauth2', 'accesstoken')
-
         data = {
             'grant_type': 'client_credentials'
         }
 
         response = self._json(self._post(url, auth=creds, headers=None, data=data), 200)
         authentication = Authentication(response)
-        now = datetime.datetime.utcnow()
-        access_token = response['access_token']
-        expires_in = response['expires_in']
-        expiration_date = datetime.datetime.utcnow() + datetime.timedelta(0, expires_in)
-        authentication_data = response.copy()
-        authentication_data.update({
-            'expiration_date': expiration_date.isoformat()
-        })
-        try:
-            self.access_token = response['access_token']
-            return authentication_data
-        except KeyError:
-            raise exceptions.AuthenticationError('Missing access_token from API')
+        self.access_token = authentication.access_token
+        return authentication
 
+
+    def add_offer(self, seller_code, basket_id, performance_code, section, demands, fees):
+        """
+        Add an offer to an existing basket
+
+        Section/Area is the group of seats
+        """
+        url = self.build_url('baskets', basket_id, 'offers')
+        data = {
+            'Channel': 'W',
+            'Seller': seller_code,
+            'Performancecode': performance_code,
+            'Area': section,
+            'holdcode': '',
+            'Demand': [demand.to_request() for demand in demands],
+            'Fees': [fee.to_request() for fee in fees]
+        }
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
+        return response
 
     def create_basket(self, seller_code, performance_code, section, demands, fees):
         """
@@ -258,9 +265,21 @@ class Payment(object):
         return request
 
 class Authentication(dict):
+
     def __init__(self, data):
         super(Authentication, self).__init__(data)
+        if 'access_token' not in data:
+            raise exceptions.AuthenticationError('Missing access_token from API')
+        now = datetime.datetime.utcnow()
+        expires_in = data['expires_in']
+        expiration_date = datetime.datetime.utcnow() + datetime.timedelta(0, expires_in)
+        self.update({
+            'expiration_date': expiration_date.isoformat()
+        })
 
+    @property
+    def access_token(self):
+        return self['access_token']
 
 class Customer(object):
     def __init__(self, customer_data):
@@ -271,5 +290,16 @@ class Basket(dict):
         super(Basket, self).__init__(data)
 
     @property
+    def offers(self):
+        return self['Offers']
+
+
+    @property
     def total(self):
-        return int(self['Offers'][0]['Demand'][0]['Prices'][0]['Net'])
+        if len(self.offers) == 1:
+            return self.net(self.offers[0])
+        else:
+            return reduce((lambda x, y: self.net(x), + self.net(y)), self['Offers'])
+
+    def net(self, offer):
+        return offer['Demand'][0]['Prices'][0]['Net']
