@@ -189,6 +189,20 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
+    def reverse_order(self, seller_code, order_id):
+        """
+        Reverse an order that was once purchased.
+        """
+        order = Order(self.order(seller_code, order_id))
+        url = self.build_url('orders', order_id, 'reverse')
+        data = {
+            'Seller': seller_code,
+            'refunds': [Payment(order.total).to_request()]
+        }
+        response = self._post(url, data=json.dumps(data))
+        self.is_response_successful(response, 204)
+        return
+
     def _get(self, url, **kwargs):
         default_headers = {
             'Authorization': 'Bearer {0}'.format(self.access_token),
@@ -299,7 +313,25 @@ class Basket(dict):
         if len(self.offers) == 1:
             return self.net(self.offers[0])
         else:
-            return reduce((lambda x, y: self.net(x), + self.net(y)), self.offers)
+            return reduce((lambda x, y: self.net(x) + self.net(y)), self.offers)
 
     def net(self, offer):
         return offer['Demand'][0]['Prices'][0]['Net']
+
+class Order(dict):
+    def __init__(self, data):
+        super(Order, self).__init__(data)
+
+    @property
+    def line_items(self):
+        return self['OrderItems'][0]['OrderLineItems']
+
+    @property
+    def total(self):
+        if len(self.line_items) == 1:
+            return self['OrderItems'][0]['OrderLineItems'][0]['Price']['Net']
+        else:
+            return sum(self.net(line_item) for line_item in self.line_items)
+
+    def net(self, line_item):
+        return line_item['Price']['Net']
