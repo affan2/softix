@@ -83,3 +83,29 @@ def test_create_basket(seller_code):
         basket = st.create_basket(seller_code, 'ETES0000004EL', 'SGA', demands, fees)
         assert basket
         assert isinstance(basket, dict)
+
+
+def test_purchase_basket(seller_code):
+    st = softix.SoftixCore()
+    recorder = betamax.Betamax(st.session)
+    cassette_name = 'SoftixCore_purchase_basket'
+    match_on = ['uri', 'method', 'json-body']
+    st.access_token = os.environ.get('SOFTIX_TOKEN', '')
+
+    with recorder.use_cassette(cassette_name, match_requests_on=match_on):
+        order = st.purchase_basket(seller_code, '2587-34722766')
+        assert order
+        assert isinstance(order, dict)
+
+
+def test_view_order(seller_code):
+    st = softix.SoftixCore()
+    recorder = betamax.Betamax(st.session)
+    cassette_name = 'SoftixCore_view_order'
+    match_on = ['uri', 'method', 'json-body']
+    st.access_token = os.environ.get('SOFTIX_TOKEN', '')
+
+    with recorder.use_cassette(cassette_name, match_requests_on=match_on):
+        order = st.order(seller_code, '20161116,1023')
+        assert order
+        assert isinstance(order, dict)

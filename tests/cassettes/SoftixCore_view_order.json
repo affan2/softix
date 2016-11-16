@@ -1,0 +1,47 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2016-11-16T05:08:22",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": "application/vnd.softix.api-v1.0+json",
+          "Accept-Encoding": "gzip, deflate",
+          "Accept-Language": "en_US",
+          "Authorization": "Bearer <OAUTH_TOKEN>>",
+          "Connection": "keep-alive",
+          "Content-Type": "application/json",
+          "User-Agent": "python-requests/2.10.0"
+        },
+        "method": "GET",
+        "uri": "https://api.etixdubai.com/orders/20161116,1023?sellerCode=ANMFZ1"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"Id\":\"20161116,1023\",\"DateTime\":\"0001-01-01T00:00:00\",\"Payments\":[{\"Id\":\"20161116,1022\",\"InventorySource\":{\"Id\":\"20161116,1022\",\"Name\":\"Origin\"}}],\"OrderItems\":[{\"Id\":\"20161116,1023\",\"DateTime\":\"0001-01-01T00:00:00\",\"InventorySource\":{\"Id\":\"20161116,1023\",\"Name\":\"Origin\"},\"OrderLineItems\":[{\"Id\":1,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"PriceTypeId\":null,\"PriceTypeCode\":\"G\",\"PriceTypeName\":\"10DIS\",\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Concession\":false,\"Barcode\":\"29263242296862\",\"Customer\":{\"Id\":null,\"AFile\":\"tel\",\"Account\":\"101\",\"OrgCustomerId\":null},\"Price\":{\"Id\":null,\"SheetId\":0,\"Net\":8000,\"Fees\":[{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Booking Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]},\"Seat\":{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"139\",\"RzStr\":\"RGA/G139-\"}},{\"Id\":2,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"PriceTypeId\":null,\"PriceTypeCode\":\"G\",\"PriceTypeName\":\"10DIS\",\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Concession\":false,\"Barcode\":\"29224696225352\",\"Customer\":{\"Id\":null,\"AFile\":\"tel\",\"Account\":\"101\",\"OrgCustomerId\":null},\"Price\":{\"Id\":null,\"SheetId\":0,\"Net\":8000,\"Fees\":[{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Booking Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]},\"Seat\":{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"140\",\"RzStr\":\"RGA/G140-\"}},{\"Id\":3,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"PriceTypeId\":null,\"PriceTypeCode\":\"G\",\"PriceTypeName\":\"10DIS\",\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Concession\":false,\"Barcode\":\"29222623648289\",\"Customer\":{\"Id\":null,\"AFile\":\"tel\",\"Account\":\"101\",\"OrgCustomerId\":null},\"Price\":{\"Id\":null,\"SheetId\":0,\"Net\":8000,\"Fees\":[{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Booking Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]},\"Seat\":{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"141\",\"RzStr\":\"RGA/G141-\"}},{\"Id\":4,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"PriceTypeId\":null,\"PriceTypeCode\":\"Q\",\"PriceTypeName\":\"NMFZCO\",\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Concession\":false,\"Barcode\":\"29966228922324\",\"Customer\":{\"Id\":null,\"AFile\":\"tel\",\"Account\":\"101\",\"OrgCustomerId\":null},\"Price\":{\"Id\":null,\"SheetId\":0,\"Net\":10000,\"Fees\":[{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Booking Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]},\"Seat\":{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"142\",\"RzStr\":\"RGA/Q142-\"}},{\"Id\":5,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"PriceTypeId\":null,\"PriceTypeCode\":\"Q\",\"PriceTypeName\":\"NMFZCO\",\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Concession\":false,\"Barcode\":\"29956639222294\",\"Customer\":{\"Id\":null,\"AFile\":\"tel\",\"Account\":\"101\",\"OrgCustomerId\":null},\"Price\":{\"Id\":null,\"SheetId\":0,\"Net\":10000,\"Fees\":[{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Booking Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]},\"Seat\":{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"143\",\"RzStr\":\"RGA/Q143-\"}},{\"Id\":6,\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":null,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":null,\"Seller\":\"ANMFZ1\",\"Channel\":\"W\",\"PriceTypeId\":null,\"PriceTypeCode\":\"Q\",\"PriceTypeName\":\"NMFZCO\",\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Concession\":false,\"Barcode\":\"29942266283239\",\"Customer\":{\"Id\":null,\"AFile\":\"tel\",\"Account\":\"101\",\"OrgCustomerId\":null},\"Price\":{\"Id\":null,\"SheetId\":0,\"Net\":10000,\"Fees\":[{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Booking Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]},\"Seat\":{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"144\",\"RzStr\":\"RGA/Q144-\"}}],\"Fees\":[{\"Id\":null,\"Code\":\"W\",\"SheetId\":0,\"Type\":\"5\",\"TypeName\":\"Handling Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null},{\"Id\":null,\"Code\":null,\"SheetId\":0,\"Type\":\"4\",\"TypeName\":\"Paytype Fee\",\"Name\":null,\"Total\":0,\"Bucket\":null,\"Inside\":false,\"FinanceCode\":null}]}]}"
+        },
+        "headers": {
+          "Cache-Control": "no-cache",
+          "Content-Length": "4698",
+          "Content-Type": "application/json; charset=utf-8",
+          "Date": "Wed, 16 Nov 2016 05:05:43 GMT",
+          "Expires": "-1",
+          "Pragma": "no-cache",
+          "Server": "Microsoft-IIS/7.5",
+          "X-AspNet-Version": "4.0.30319",
+          "X-Powered-By": "ASP.NET"
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://api.etixdubai.com/orders/20161116,1023?sellerCode=ANMFZ1"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.7.2"
+}
