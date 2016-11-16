@@ -313,7 +313,7 @@ class Basket(dict):
         if len(self.offers) == 1:
             return self.net(self.offers[0])
         else:
-            return reduce((lambda x, y: self.net(x) + self.net(y)), self.offers)
+            return sum(self.net(offer) for offer in self.offers)
 
     def net(self, offer):
         return offer['Demand'][0]['Prices'][0]['Net']
