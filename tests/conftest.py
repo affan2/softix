@@ -8,8 +8,6 @@ from betamax_matchers import json_body
 from betamax_serializers import pretty_json
 
 betamax.Betamax.register_request_matcher(json_body.JSONBodyMatcher)
-credentials = [os.environ.get('SOFTIX_CLIENT_ID', 'foo').encode(),
-               os.environ.get('SOFTIX_SECRET', 'foo').encode()]
 
 @pytest.fixture(scope='module')
 def softixcore():
@@ -74,8 +72,8 @@ with betamax.Betamax.configure() as config:
     config.default_cassette_options['match_requests_on'].append('json-body')
     config.default_cassette_options['serialize_with'] = 'prettyjson'
     config.define_cassette_placeholder(
-        '<BASIC_AUTH>',
-        base64.b64encode(b':'.join(credentials)).decode()
+        '<OAUTH_TOKEN>>',
+        os.environ.get('SOFTIX_TOKEN', '')
     )
 
 

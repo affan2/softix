@@ -1,33 +1,39 @@
 import softix
 import pytest
+import mock
+
+@pytest.fixture
+def auth_headers():
+    return {'Content-Type': 'application/json', 'Authorization': 'Bearer '}
 
 def test_authenticate(softixcore):
     """
     Verify authentication is called correctly.
     """
-    softixcore.authenticate('my-username', 'my-password')
+    with mock.patch.object(softix.models, 'Authentication') as auth:
+        softixcore.authenticate('my-username', 'my-password')
     url = 'https://api.etixdubai.com/oauth2/accesstoken'
     softixcore.session.post.assert_called_once_with(
         url,
         auth=('my-username', 'my-password'),
-        data={'grant_type': 'client_credentials'}
+        data={'grant_type': 'client_credentials'},
+        headers=None
     )
 
-def test_performance_prices(softixcore):
+def test_performance_prices(softixcore, auth_headers):
     """
     Verify the URL called.
     """
+
+    #reset auth
+    softixcore.access_token = ''
     softixcore.performance_prices('seller-code', 'ETES2JN')
     data = {'channel': 'W', 'sellerCode': 'seller-code'}
     url = 'https://api.etixdubai.com/performances/ETES2JN/prices'
-    headers = {
-        'Authorization': 'Bearer ',
-        'Content-Type': 'application/json'
-    }
     softixcore.session.get.assert_called_once_with(
         url,
         params=data,
-        headers=headers
+        headers=auth_headers
     )
 
 def test_uppercase_keys():

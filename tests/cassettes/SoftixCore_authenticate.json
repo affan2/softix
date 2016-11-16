@@ -1,7 +1,7 @@
 {
   "http_interactions": [
     {
-      "recorded_at": "2016-08-13T23:20:33",
+      "recorded_at": "2016-11-16T04:36:02",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -11,7 +11,7 @@
           "Accept": "application/vnd.softix.api-v1.0+json",
           "Accept-Encoding": "gzip, deflate",
           "Accept-Language": "en_US",
-          "Authorization": "Basic <BASIC_AUTH>",
+          "Authorization": "Basic ZjU4OTY3NDAyNzFiNDNkZmJmNmYyZGMyZjY4OWFjNjY6MmQyNDA3YzJhMjBiNGMyZjg0NWFlOTY1MjkxMzg1NWQ=",
           "Connection": "keep-alive",
           "Content-Length": "29",
           "Content-Type": "application/x-www-form-urlencoded",
@@ -23,13 +23,13 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"access_token\":\"844e4c116f7249a1b14b5f09f8ac42a0\",\"token_type\":\"Bearer\",\"expires_in\":86399,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
+          "string": "{\"access_token\":\"6636f872898c49ff9f62dca86fe89ec4\",\"token_type\":\"Bearer\",\"expires_in\":86399,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
         },
         "headers": {
           "Cache-Control": "no-cache",
           "Content-Length": "326",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 13 Aug 2016 23:19:16 GMT",
+          "Date": "Wed, 16 Nov 2016 04:33:23 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",

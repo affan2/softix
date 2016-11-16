@@ -1,51 +1,7 @@
 {
   "http_interactions": [
     {
-      "recorded_at": "2016-10-16T18:19:14",
-      "request": {
-        "body": {
-          "encoding": "utf-8",
-          "string": "grant_type=client_credentials"
-        },
-        "headers": {
-          "Accept": "application/vnd.softix.api-v1.0+json",
-          "Accept-Encoding": "gzip, deflate",
-          "Accept-Language": "en_US",
-          "Authorization": "Basic <BASIC_AUTH>",
-          "Connection": "keep-alive",
-          "Content-Length": "29",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "User-Agent": "python-requests/2.10.0"
-        },
-        "method": "POST",
-        "uri": "https://api.etixdubai.com/oauth2/accesstoken"
-      },
-      "response": {
-        "body": {
-          "encoding": "utf-8",
-          "string": "{\"access_token\":\"469199df25d64469936479026b0068de\",\"token_type\":\"Bearer\",\"expires_in\":86400,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
-        },
-        "headers": {
-          "Cache-Control": "no-cache",
-          "Content-Length": "326",
-          "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sun, 16 Oct 2016 18:16:57 GMT",
-          "Expires": "-1",
-          "Pragma": "no-cache",
-          "Server": "Microsoft-IIS/7.5",
-          "X-AspNet-Version": "4.0.30319",
-          "X-Powered-By": "ASP.NET",
-          "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
-        },
-        "status": {
-          "code": 200,
-          "message": "OK"
-        },
-        "url": "https://api.etixdubai.com/oauth2/accesstoken"
-      }
-    },
-    {
-      "recorded_at": "2016-10-16T18:19:14",
+      "recorded_at": "2016-11-16T04:20:53",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -55,7 +11,7 @@
           "Accept": "application/vnd.softix.api-v1.0+json",
           "Accept-Encoding": "gzip, deflate",
           "Accept-Language": "en_US",
-          "Authorization": "Bearer 469199df25d64469936479026b0068de",
+          "Authorization": "Bearer <OAUTH_TOKEN>>",
           "Connection": "keep-alive",
           "Content-Length": "339",
           "Content-Type": "application/json",
@@ -67,13 +23,13 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"ID\":1538078,\"Account\":1523045,\"AFile\":\"tel\"}"
+          "string": "{\"ID\":1768618,\"Account\":1753759,\"AFile\":\"tel\"}"
         },
         "headers": {
           "Cache-Control": "no-cache",
           "Content-Length": "46",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sun, 16 Oct 2016 18:16:57 GMT",
+          "Date": "Wed, 16 Nov 2016 04:18:14 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",

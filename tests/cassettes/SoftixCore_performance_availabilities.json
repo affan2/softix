@@ -1,51 +1,7 @@
 {
   "http_interactions": [
     {
-      "recorded_at": "2016-09-03T20:05:32",
-      "request": {
-        "body": {
-          "encoding": "utf-8",
-          "string": "grant_type=client_credentials"
-        },
-        "headers": {
-          "Accept": "application/vnd.softix.api-v1.0+json",
-          "Accept-Encoding": "gzip, deflate",
-          "Accept-Language": "en_US",
-          "Authorization": "Basic <BASIC_AUTH>",
-          "Connection": "keep-alive",
-          "Content-Length": "29",
-          "Content-Type": "application/x-www-form-urlencoded",
-          "User-Agent": "python-requests/2.10.0"
-        },
-        "method": "POST",
-        "uri": "https://api.etixdubai.com/oauth2/accesstoken"
-      },
-      "response": {
-        "body": {
-          "encoding": "utf-8",
-          "string": "{\"access_token\":\"25c28d72262841f7ad23a4334edd0d55\",\"token_type\":\"Bearer\",\"expires_in\":86399,\"scope\":\"https://api.etixdubai.com/performances.* https://api.etixdubai.com/baskets.* https://api.etixdubai.com/orders.* https://api.etixdubai.com/inventory.* https://api.etixdubai.com/customers.* https://api.etixdubai.com/tixscan.*\"}"
-        },
-        "headers": {
-          "Cache-Control": "no-cache",
-          "Content-Length": "326",
-          "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 03 Sep 2016 20:03:44 GMT",
-          "Expires": "-1",
-          "Pragma": "no-cache",
-          "Server": "Microsoft-IIS/7.5",
-          "X-AspNet-Version": "4.0.30319",
-          "X-Powered-By": "ASP.NET",
-          "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
-        },
-        "status": {
-          "code": 200,
-          "message": "OK"
-        },
-        "url": "https://api.etixdubai.com/oauth2/accesstoken"
-      }
-    },
-    {
-      "recorded_at": "2016-09-03T20:05:33",
+      "recorded_at": "2016-11-16T04:24:45",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -55,7 +11,7 @@
           "Accept": "application/vnd.softix.api-v1.0+json",
           "Accept-Encoding": "gzip, deflate",
           "Accept-Language": "en_US",
-          "Authorization": "Bearer 25c28d72262841f7ad23a4334edd0d55",
+          "Authorization": "Bearer <OAUTH_TOKEN>>",
           "Connection": "keep-alive",
           "Content-Type": "application/json",
           "User-Agent": "python-requests/2.10.0"
@@ -66,18 +22,17 @@
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"PriceCategories\":[{\"Availability\":{\"SoldOut\":false,\"StatusCode\":\"Ok\"},\"PriceCategoryId\":1,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":\"Reserved Seating\"},{\"Availability\":{\"SoldOut\":true,\"StatusCode\":\"SoldOut\"},\"PriceCategoryId\":2,\"PriceCategoryCode\":\"2\",\"PriceCategoryName\":\"Gold\"},{\"Availability\":{\"SoldOut\":true,\"StatusCode\":\"SoldOut\"},\"PriceCategoryId\":3,\"PriceCategoryCode\":\"3\",\"PriceCategoryName\":\"Ga1\"},{\"Availability\":{\"SoldOut\":false,\"StatusCode\":\"Ok\"},\"PriceCategoryId\":4,\"PriceCategoryCode\":\"4\",\"PriceCategoryName\":\"Tcat\"}]}"
+          "string": "{\"PriceCategories\":[{\"Availability\":{\"SoldOut\":false,\"StatusCode\":\"Ok\"},\"PriceCategoryId\":1,\"PriceCategoryCode\":\"1\",\"PriceCategoryName\":\"Reserved Seating\"},{\"Availability\":{\"SoldOut\":true,\"StatusCode\":\"SoldOut\"},\"PriceCategoryId\":2,\"PriceCategoryCode\":\"2\",\"PriceCategoryName\":\"Gold\"},{\"Availability\":{\"SoldOut\":true,\"StatusCode\":\"SoldOut\"},\"PriceCategoryId\":3,\"PriceCategoryCode\":\"3\",\"PriceCategoryName\":\"Ga1\"},{\"Availability\":{\"SoldOut\":false,\"StatusCode\":\"Limited\"},\"PriceCategoryId\":4,\"PriceCategoryCode\":\"4\",\"PriceCategoryName\":\"Tcat\"}]}"
         },
         "headers": {
           "Cache-Control": "no-cache",
-          "Content-Length": "536",
+          "Content-Length": "541",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Sat, 03 Sep 2016 20:03:45 GMT",
-          "ETag": "\"1ba376e9-dfc8-42dc-9263-e682e8e3f4f6\"",
+          "Date": "Wed, 16 Nov 2016 04:22:07 GMT",
+          "ETag": "\"b6b46443-310a-4d56-b9f0-825c49fa62ef\"",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
-          "Via": "http/1.1 SeatMapAPIProxy",
           "X-AspNet-Version": "4.0.30319",
           "X-Powered-By": "ASP.NET",
           "X-Softix-Media-Type": "application/vnd.softix.api-v1+json; charset=utf-8"
