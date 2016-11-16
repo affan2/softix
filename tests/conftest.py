@@ -9,7 +9,7 @@ from betamax_serializers import pretty_json
 
 betamax.Betamax.register_request_matcher(json_body.JSONBodyMatcher)
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def softixcore():
     """
     Returns a softixcore instance
