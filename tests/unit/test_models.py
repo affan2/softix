@@ -20,6 +20,22 @@ def test_authenticate(softixcore):
         headers=None
     )
 
+def test_order(softixcore, auth_headers):
+    """
+    Verify the URL called.
+    """
+
+    #reset auth
+    softixcore.access_token = ''
+    softixcore.order('seller-code', '863-145')
+    data = {'sellerCode': 'seller-code'}
+    url = 'https://api.etixdubai.com/orders/863-145'
+    softixcore.session.get.assert_called_once_with(
+        url,
+        params=data,
+        headers=auth_headers
+    )
+
 def test_performance_prices(softixcore, auth_headers):
     """
     Verify the URL called.
