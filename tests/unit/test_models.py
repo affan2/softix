@@ -36,6 +36,23 @@ def test_performance_prices(softixcore, auth_headers):
         headers=auth_headers
     )
 
+
+def test_performance_availabilities(softixcore, auth_headers):
+    """
+    Verify the URL called.
+    """
+
+    #reset auth
+    softixcore.access_token = ''
+    softixcore.performance_availabilities('seller-code', 'ETES2JN')
+    data = {'channel': 'W', 'sellerCode': 'seller-code'}
+    url = 'https://api.etixdubai.com/performances/ETES2JN/availabilities'
+    softixcore.session.get.assert_called_once_with(
+        url,
+        params=data,
+        headers=auth_headers
+    )
+
 def test_uppercase_keys():
     mydict = {
         'nationality': 'in',
