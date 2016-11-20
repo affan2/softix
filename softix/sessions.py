@@ -3,9 +3,8 @@ import requests
 
 class Session(requests.sessions.Session):
 
-
     def __init__(self):
-        super(Session, self).__init__() 
+        super(Session, self).__init__()
         self.base_url = 'https://api.etixdubai.com/'
 
         headers = {

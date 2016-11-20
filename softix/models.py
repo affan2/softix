@@ -1,8 +1,9 @@
-import os
 import datetime
-import sessions
 import json
+
+import sessions
 from . import exceptions
+from . helpers import remove_none
 
 
 def uppercase_keys(item, *keys):
@@ -11,6 +12,7 @@ def uppercase_keys(item, *keys):
         if key in item_copy:
             item_copy[key] = item_copy.get(key, '').upper()
     return item_copy
+
 
 def validate_customer(customer):
     required_fields = (
@@ -44,6 +46,7 @@ def validate_customer(customer):
             '{0} needs to be a 2 characters'.format('nationality')
             )
 
+
 def two_characters_long(data):
     return True if len(data) == 2 else False
 
@@ -64,8 +67,11 @@ class SoftixCore(object):
           'No basket found for the requested basket id'
         """
         url = self.build_url('baskets', basket_id)
-        data = self._json(self._get(url, params={'sellerCode': seller_code}), 200)
-        return data
+        data = {
+            'sellerCode': seller_code
+        }
+        response = self._json(self._get(url, params=data), 200)
+        return response
 
     def build_url(self, *urls, **kwargs):
         """
@@ -95,7 +101,6 @@ class SoftixCore(object):
         self.access_token = authentication.access_token
         return authentication
 
-
     def add_offer(self, seller_code, basket_id, performance_code, section, demands, fees):
         """
         Add an offer to an existing basket
@@ -115,12 +120,13 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
-    def create_basket(self, seller_code, performance_code, section, demands, fees):
+    def create_basket(self, seller_code, performance_code, section, demands, fees, customer_id=None):
         """
         Create a new basket.
 
         Section/Area is the group of seats
         """
+        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None
         url = self.build_url('baskets')
         data = {
             'Channel': 'W',
@@ -129,8 +135,11 @@ class SoftixCore(object):
             'Area': section,
             'holdcode': '',
             'Demand': [demand.to_request() for demand in demands],
-            'Fees': [fee.to_request() for fee in fees]
+            'Fees': [fee.to_request() for fee in fees],
+            'Customer': customer
         }
+        remove_none(data)
+        print data
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
@@ -146,6 +155,14 @@ class SoftixCore(object):
         url = self.build_url('customers?sellerCode={0}'.format(seller_code))
         data = self._json(self._post(url, data=json.dumps(customer)), 200)
         return data
+
+    def customer(self, seller_code, customer_id):
+        url = self.build_url('customers', customer_id)
+        data = {
+            'sellerCode': seller_code
+        }
+        data = self._json(self._get(url, params=data), 200)
+        return Customer(data)
 
     def order(self, seller_code, order_id):
         """
@@ -169,23 +186,26 @@ class SoftixCore(object):
 
     def performance_prices(self, seller_code, performance_code):
         """
-        Retrieve performance prices. 
+        Retrieve performance prices.
         """
         url = self.build_url('performances', performance_code, 'prices')
         data = {'channel': 'W', 'sellerCode': seller_code}
         prices = self._json(self._get(url, params=data), 200)
         return prices
 
-    def purchase_basket(self, seller_code, basket_id):
+    def purchase_basket(self, seller_code, basket_id, customer_id=None):
         """
         Purchase a basket.
         """
         url = self.build_url('Baskets', basket_id, 'purchase')
         basket = Basket(self.basket(seller_code, basket_id))
+        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None
         data = {
             'Seller': seller_code,
-            'Payments': [Payment(basket.total).to_request()]
+            'Payments': [Payment(basket.total).to_request()],
+            'customer': customer
         }
+        remove_none(data)
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
@@ -236,7 +256,9 @@ class SoftixCore(object):
                 raise exceptions.SoftixError(response.json().get('Message'))
         return False
 
+
 class Demand(object):
+
 
     def __init__(self, price_type_code, quantity, admits):
         self.price_type_code = str(price_type_code)
@@ -267,6 +289,8 @@ class Fee(object):
         return fee
 
 class Payment(object):
+
+
     def __init__(self, amount, means_of_payment='EXTERNAL'):
         self.amount = amount
         self.means_of_payment = means_of_payment
@@ -278,6 +302,7 @@ class Payment(object):
         }
         return request
 
+
 class Authentication(dict):
 
     def __init__(self, data):
@@ -286,7 +311,7 @@ class Authentication(dict):
             raise exceptions.AuthenticationError('Missing access_token from API')
         now = datetime.datetime.utcnow()
         expires_in = data['expires_in']
-        expiration_date = datetime.datetime.utcnow() + datetime.timedelta(0, expires_in)
+        expiration_date = now + datetime.timedelta(0, expires_in)
         self.update({
             'expiration_date': expiration_date.isoformat()
         })
@@ -295,9 +320,31 @@ class Authentication(dict):
     def access_token(self):
         return self['access_token']
 
-class Customer(object):
-    def __init__(self, customer_data):
-        self.customer_data = customer_data
+class Customer(dict):
+    def __init__(self, data):
+        super(Customer, self).__init__(data)
+
+    @classmethod
+    def from_id(cls, customer_id):
+        return cls({'ID': customer_id})
+
+
+    @property
+    def account(self):
+        return self['Account']
+
+    @property
+    def afile(self):
+        return self['AFile']
+
+    @property
+    def id(self):
+        return self['ID']
+
+    def to_request(self):
+        if not self:
+            return {}
+        return {"ID": self.id, "Account": self.account, "AFile": self.afile}
 
 class Basket(dict):
     def __init__(self, data):
@@ -306,7 +353,6 @@ class Basket(dict):
     @property
     def offers(self):
         return self['Offers']
-
 
     @property
     def total(self):
@@ -317,6 +363,7 @@ class Basket(dict):
 
     def net(self, offer):
         return offer['Demand'][0]['Prices'][0]['Net']
+
 
 class Order(dict):
     def __init__(self, data):

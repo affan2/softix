@@ -93,9 +93,21 @@ def test_purchase_basket(seller_code):
     st.access_token = os.environ.get('SOFTIX_TOKEN', '')
 
     with recorder.use_cassette(cassette_name, match_requests_on=match_on):
-        order = st.purchase_basket(seller_code, '2587-34722766')
+        order = st.purchase_basket(seller_code, '4281-35183081')
         assert order
         assert isinstance(order, dict)
+
+
+def test_reverse_order(seller_code):
+    st = softix.SoftixCore()
+    recorder = betamax.Betamax(st.session)
+    cassette_name = 'SoftixCore_reverse_order'
+    match_on = ['uri', 'method', 'json-body']
+    st.access_token = os.environ.get('SOFTIX_TOKEN', '')
+
+    with recorder.use_cassette(cassette_name, match_requests_on=match_on):
+        order = st.reverse_order(seller_code, '20161116,1023')
+        assert order is None
 
 
 def test_view_order(seller_code):
