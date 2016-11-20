@@ -1,7 +1,7 @@
 {
   "http_interactions": [
     {
-      "recorded_at": "2016-11-16T05:06:10",
+      "recorded_at": "2016-11-20T22:15:53",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -17,18 +17,18 @@
           "User-Agent": "python-requests/2.10.0"
         },
         "method": "GET",
-        "uri": "https://api.etixdubai.com/baskets/2587-34722766?sellerCode=ANMFZ1"
+        "uri": "https://api.etixdubai.com/baskets/4281-35183081?sellerCode=ANMFZ1"
       },
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"Expiry\":null,\"Id\":\"2587-34722766\",\"Offers\":[{\"Id\":\"1\",\"InventorySource\":{\"Id\":\"2587:34722766\",\"Name\":\"Origin\"},\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":\"1\",\"PriceCategoryCode\":\"1\",\"PriceCategory\":null,\"Seller\":null,\"Channel\":null,\"Demand\":[{\"PriceTypeId\":null,\"PriceTypeCode\":\"G\",\"PriceType\":null,\"Quantity\":3,\"Admits\":3,\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Customer\":null,\"Prices\":[{\"Id\":null,\"SheetId\":0,\"Net\":54000,\"Fees\":[{\"Id\":null,\"Bucket\":null,\"Code\":null,\"FinanceCode\":null,\"Inside\":false,\"Name\":null,\"SheetId\":0,\"Total\":0,\"Type\":\"1\",\"TypeName\":\"BookingFee\"}]}]},{\"PriceTypeId\":null,\"PriceTypeCode\":\"Q\",\"PriceType\":null,\"Quantity\":3,\"Admits\":3,\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Customer\":null,\"Prices\":null}],\"Seats\":[{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"-\",\"RzStr\":\"RGA/G139-141,Q142-144\"}],\"Fees\":[{\"Id\":null,\"Bucket\":null,\"Code\":\"W\",\"FinanceCode\":null,\"Inside\":false,\"Name\":null,\"SheetId\":0,\"Total\":0,\"Type\":\"5\",\"TypeName\":\"Handling Fee\"}]}],\"Fees\":null}"
+          "string": "{\"Expiry\":null,\"Id\":\"4281-35183081\",\"Offers\":[{\"Id\":\"1\",\"InventorySource\":{\"Id\":\"4281:35183081\",\"Name\":\"Origin\"},\"DateTime\":\"0001-01-01T00:00:00\",\"PerformanceCode\":\"ETES0000004EL\",\"PriceCategoryId\":\"1\",\"PriceCategoryCode\":\"1\",\"PriceCategory\":null,\"Seller\":null,\"Channel\":null,\"Demand\":[{\"PriceTypeId\":null,\"PriceTypeCode\":\"G\",\"PriceType\":null,\"Quantity\":3,\"Admits\":3,\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Customer\":null,\"Prices\":[{\"Id\":null,\"SheetId\":0,\"Net\":54000,\"Fees\":[{\"Id\":null,\"Bucket\":null,\"Code\":null,\"FinanceCode\":null,\"Inside\":false,\"Name\":null,\"SheetId\":0,\"Total\":0,\"Type\":\"1\",\"TypeName\":\"BookingFee\"}]}]},{\"PriceTypeId\":null,\"PriceTypeCode\":\"Q\",\"PriceType\":null,\"Quantity\":3,\"Admits\":3,\"OfferCode\":null,\"QualifierCode\":null,\"Entitlement\":null,\"Customer\":null,\"Prices\":null}],\"Seats\":[{\"Section\":\"SGA\",\"Row\":\"GA\",\"Seats\":\"-\",\"RzStr\":\"RGA/G186-188,Q189-191\"}],\"Fees\":[{\"Id\":null,\"Bucket\":null,\"Code\":\"W\",\"FinanceCode\":null,\"Inside\":false,\"Name\":null,\"SheetId\":0,\"Total\":0,\"Type\":\"5\",\"TypeName\":\"Handling Fee\"}]}],\"Fees\":null}"
         },
         "headers": {
           "Cache-Control": "no-cache",
           "Content-Length": "1056",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Wed, 16 Nov 2016 05:03:30 GMT",
+          "Date": "Sun, 20 Nov 2016 22:13:11 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
@@ -39,11 +39,11 @@
           "code": 200,
           "message": "OK"
         },
-        "url": "https://api.etixdubai.com/baskets/2587-34722766?sellerCode=ANMFZ1"
+        "url": "https://api.etixdubai.com/baskets/4281-35183081?sellerCode=ANMFZ1"
       }
     },
     {
-      "recorded_at": "2016-11-16T05:06:10",
+      "recorded_at": "2016-11-20T22:15:56",
       "request": {
         "body": {
           "encoding": "utf-8",
@@ -60,18 +60,18 @@
           "User-Agent": "python-requests/2.10.0"
         },
         "method": "POST",
-        "uri": "https://api.etixdubai.com/Baskets/2587-34722766/purchase"
+        "uri": "https://api.etixdubai.com/Baskets/4281-35183081/purchase"
       },
       "response": {
         "body": {
           "encoding": "utf-8",
-          "string": "{\"OrderId\":\"20161116,1023\"}"
+          "string": "{\"OrderId\":\"20161121,152\"}"
         },
         "headers": {
           "Cache-Control": "no-cache",
-          "Content-Length": "27",
+          "Content-Length": "26",
           "Content-Type": "application/json; charset=utf-8",
-          "Date": "Wed, 16 Nov 2016 05:03:31 GMT",
+          "Date": "Sun, 20 Nov 2016 22:13:12 GMT",
           "Expires": "-1",
           "Pragma": "no-cache",
           "Server": "Microsoft-IIS/7.5",
@@ -82,7 +82,7 @@
           "code": 201,
           "message": "Created"
         },
-        "url": "https://api.etixdubai.com/Baskets/2587-34722766/purchase"
+        "url": "https://api.etixdubai.com/Baskets/4281-35183081/purchase"
       }
     }
   ],

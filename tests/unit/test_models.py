@@ -20,6 +20,14 @@ def test_authenticate(softixcore):
         headers=None
     )
 
+def test_customer():
+    """
+    Verify customer object.
+    """
+    customer = softix.models.Customer({})
+    assert customer.to_request() == {}
+
+
 def test_order(softixcore, auth_headers):
     """
     Verify the URL called.
