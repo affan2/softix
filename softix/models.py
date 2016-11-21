@@ -139,7 +139,6 @@ class SoftixCore(object):
             'Customer': customer
         }
         remove_none(data)
-        print data
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
