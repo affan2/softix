@@ -120,6 +120,27 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
+    def add_offer_with_seats(self, seller_code, basket_id, performance_code,
+                             section, demands, fees, seats):
+        """
+        Add an offer to an existing basket
+
+        Section/Area is the group of seats
+        """
+        url = self.build_url('baskets', basket_id, 'offers')
+        data = {
+            'Channel': 'W',
+            'Seller': seller_code,
+            'Performancecode': performance_code,
+            'Area': section,
+            'holdcode': '',
+            'Demand': [demand.to_request() for demand in demands],
+            'Fees': [fee.to_request() for fee in fees],
+            'Seats': [seat.to_request for seat in seats],
+        }
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
+        return response
+
     def create_basket(self, seller_code, performance_code, section, demands, fees, customer_id=None):
         """
         Create a new basket.
@@ -258,7 +279,6 @@ class SoftixCore(object):
 
 class Demand(object):
 
-
     def __init__(self, price_type_code, quantity, admits):
         self.price_type_code = str(price_type_code)
         self.quantity = int(quantity)
@@ -270,6 +290,22 @@ class Demand(object):
             'Quantity': self.quantity,
             'Admits': self.admits,
             'Customer': {}
+        }
+        return request
+
+
+class Seat(object):
+
+    def __init__(self, section, row, seats):
+        self.section = section
+        self.row = row
+        self.admits = seats
+
+    def to_request(self):
+        request = {
+            'section': self.section,
+            'row': self.row,
+            'seats': self.seats,
         }
         return request
 
