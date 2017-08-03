@@ -136,7 +136,7 @@ class SoftixCore(object):
             'holdcode': '',
             'Demand': [demand.to_request() for demand in demands],
             'Fees': [fee.to_request() for fee in fees],
-            'Seats': [seat.to_request for seat in seats],
+            'Seats': [seat.to_request() for seat in seats],
         }
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
