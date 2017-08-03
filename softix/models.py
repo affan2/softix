@@ -299,7 +299,7 @@ class Seat(object):
     def __init__(self, section, row, seats):
         self.section = section
         self.row = row
-        self.admits = seats
+        self.seats = seats
 
     def to_request(self):
         request = {
