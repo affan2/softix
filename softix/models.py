@@ -218,13 +218,14 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
-    def reverse_order(self, seller_code, order_id):
+    def reverse_order(self, seller_code, order_id, total):
         """Reverse an order that was once purchased."""
-        order = Order(self.order(seller_code, order_id))
+        # order = Order(self.order(seller_code, order_id))
         url = self.build_url('orders', order_id, 'reverse')
         data = {
             'Seller': seller_code,
-            'refunds': [Payment(order.total).to_request()]
+            # 'refunds': [Payment(order.total).to_request()]
+            'refunds': total
         }
         response = self._post(url, data=json.dumps(data))
         self.is_response_successful(response, 204)
