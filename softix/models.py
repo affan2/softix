@@ -160,6 +160,29 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
+    def create_basket_with_seat(self, seller_code, performance_code, section,
+                                demands, fees, seat, customer_id=None):
+        """Create a new basket.
+
+        Section/Area is the group of seats
+        """
+        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None  # NOQA
+        url = self.build_url('baskets')
+        data = {
+            'Channel': 'W',
+            'Seller': seller_code,
+            'Performancecode': performance_code,
+            'Area': section,
+            'holdcode': '',
+            'Demand': [demand.to_request() for demand in demands],
+            'Fees': [fee.to_request() for fee in fees],
+            'Seats': seat.to_request(),
+            'Customer': customer
+        }
+        remove_none(data)
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
+        return response
+
     def create_customer(self, seller_code, **customer):
         """Create a new customer.
 
