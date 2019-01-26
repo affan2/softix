@@ -40,20 +40,19 @@ def validate_customer(customer):
     if not two_characters_long(customer.get('countrycode')):
         raise exceptions.InvalidCustomerField(
             '{0} needs to be a 2 characters'.format('countrycode')
-            )
+        )
     if not two_characters_long(customer.get('nationality')):
         raise exceptions.InvalidCustomerField(
             '{0} needs to be a 2 characters'.format('nationality')
-            )
+        )
 
 
 def two_characters_long(data):
     return True if len(data) == 2 else False
 
+
 class SoftixCore(object):
-    """
-    Base class for all Softix objects.
-    """
+    """Base class for all Softix objects."""
 
     def __init__(self):
         self.access_token = ''
@@ -74,13 +73,11 @@ class SoftixCore(object):
         return response
 
     def build_url(self, *urls, **kwargs):
-        """
-        Build a url
+        """Build a url.
 
         :param string urls: A string of URIS
         :returns `string`
         """
-
         return self.session.build_url(*urls, **kwargs)
 
     def authenticate(self, username, password):
@@ -96,14 +93,15 @@ class SoftixCore(object):
             'grant_type': 'client_credentials'
         }
 
-        response = self._json(self._post(url, auth=creds, headers=None, data=data), 200)
+        response = self._json(self._post(url, auth=creds, headers=None,
+                                         data=data), 200)
         authentication = Authentication(response)
         self.access_token = authentication.access_token
         return authentication
 
-    def add_offer(self, seller_code, basket_id, performance_code, section, demands, fees):
-        """
-        Add an offer to an existing basket
+    def add_offer(self, seller_code, basket_id, performance_code, section,
+                  demands, fees):
+        """Add an offer to an existing basket.
 
         Section/Area is the group of seats
         """
@@ -120,13 +118,33 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
-    def create_basket(self, seller_code, performance_code, section, demands, fees, customer_id=None):
-        """
-        Create a new basket.
+    def add_offer_with_seats(self, seller_code, basket_id, performance_code,
+                             section, demands, fees, seat):
+        """Add an offer to an existing basket.
 
         Section/Area is the group of seats
         """
-        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None
+        url = self.build_url('baskets', basket_id, 'offers')
+        data = {
+            'Channel': 'W',
+            'Seller': seller_code,
+            'Performancecode': performance_code,
+            'Area': section,
+            'holdcode': '',
+            'Demand': [demand.to_request() for demand in demands],
+            'Fees': [fee.to_request() for fee in fees],
+            'Seats': seat.to_request(),
+        }
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
+        return response
+
+    def create_basket(self, seller_code, performance_code, section, demands,
+                      fees, customer_id=None):
+        """Create a new basket.
+
+        Section/Area is the group of seats
+        """
+        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None  # NOQA
         url = self.build_url('baskets')
         data = {
             'Channel': 'W',
@@ -142,11 +160,33 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
-    def create_customer(self, seller_code, **customer):
-        """
-        Create a new customer.
+    def create_basket_with_seat(self, seller_code, performance_code, section,
+                                demands, fees, seat, customer_id=None):
+        """Create a new basket.
 
-        :param string seller_code: (required) Seller code provided by Dubai government
+        Section/Area is the group of seats
+        """
+        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None  # NOQA
+        url = self.build_url('baskets')
+        data = {
+            'Channel': 'W',
+            'Seller': seller_code,
+            'Performancecode': performance_code,
+            'Area': section,
+            'holdcode': '',
+            'Demand': [demand.to_request() for demand in demands],
+            'Fees': [fee.to_request() for fee in fees],
+            'Seats': seat.to_request(),
+            'Customer': customer
+        }
+        remove_none(data)
+        response = self._json(self._post(url, data=json.dumps(data)), 201)
+        return response
+
+    def create_customer(self, seller_code, **customer):
+        """Create a new customer.
+
+        :param string seller_code: (required) Seller code provided by DTCM
         :returns: int id
         """
         validate_customer(customer)
@@ -164,9 +204,7 @@ class SoftixCore(object):
         return Customer(data)
 
     def order(self, seller_code, order_id):
-        """
-        View order details.
-        """
+        """View order details."""
         url = self.build_url('orders', order_id)
         data = {
             'sellerCode': seller_code
@@ -175,30 +213,25 @@ class SoftixCore(object):
         return order
 
     def performance_availabilities(self, seller_code, performance_code):
-        """
-        Retrieve performance price availibilties.
-        """
-        url = self.build_url('performances', performance_code, 'availabilities')
+        """Retrieve performance price availibilties."""
+        url = self.build_url('performances', performance_code,
+                             'availabilities')
         data = {'channel': 'W', 'sellerCode': seller_code}
         availabilities = self._json(self._get(url, params=data), 200)
         return availabilities
 
     def performance_prices(self, seller_code, performance_code):
-        """
-        Retrieve performance prices.
-        """
+        """Retrieve performance prices."""
         url = self.build_url('performances', performance_code, 'prices')
         data = {'channel': 'W', 'sellerCode': seller_code}
         prices = self._json(self._get(url, params=data), 200)
         return prices
 
     def purchase_basket(self, seller_code, basket_id, customer_id=None):
-        """
-        Purchase a basket.
-        """
+        """Purchase a basket."""
         url = self.build_url('Baskets', basket_id, 'purchase')
         basket = Basket(self.basket(seller_code, basket_id))
-        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None
+        customer = self.customer(seller_code, customer_id).to_request() if customer_id else None  # NOQA
         data = {
             'Seller': seller_code,
             'Payments': [Payment(basket.total).to_request()],
@@ -208,15 +241,14 @@ class SoftixCore(object):
         response = self._json(self._post(url, data=json.dumps(data)), 201)
         return response
 
-    def reverse_order(self, seller_code, order_id):
-        """
-        Reverse an order that was once purchased.
-        """
-        order = Order(self.order(seller_code, order_id))
+    def reverse_order(self, seller_code, order_id, total):
+        """Reverse an order that was once purchased."""
+        # order = Order(self.order(seller_code, order_id))
         url = self.build_url('orders', order_id, 'reverse')
         data = {
             'Seller': seller_code,
-            'refunds': [Payment(order.total).to_request()]
+            # 'refunds': [Payment(order.total).to_request()]
+            'refunds': total
         }
         response = self._post(url, data=json.dumps(data))
         self.is_response_successful(response, 204)
@@ -245,9 +277,7 @@ class SoftixCore(object):
         return data
 
     def is_response_successful(self, response, expected_status_code):
-        """
-        Validate response and return True if request was expected.
-        """
+        """Validate response and return True if request was expected."""
         if response is not None:
             if response.status_code == expected_status_code:
                 return True
@@ -257,7 +287,6 @@ class SoftixCore(object):
 
 
 class Demand(object):
-
 
     def __init__(self, price_type_code, quantity, admits):
         self.price_type_code = str(price_type_code)
@@ -270,6 +299,22 @@ class Demand(object):
             'Quantity': self.quantity,
             'Admits': self.admits,
             'Customer': {}
+        }
+        return request
+
+
+class Seat(object):
+
+    def __init__(self, section, row, seats):
+        self.section = section
+        self.row = row
+        self.seats = seats
+
+    def to_request(self):
+        request = {
+            'Section': self.section,
+            'Row': self.row,
+            'Seats': self.seats,
         }
         return request
 
@@ -287,8 +332,8 @@ class Fee(object):
         }
         return fee
 
-class Payment(object):
 
+class Payment(object):
 
     def __init__(self, amount, means_of_payment='EXTERNAL'):
         self.amount = amount
@@ -307,7 +352,7 @@ class Authentication(dict):
     def __init__(self, data):
         super(Authentication, self).__init__(data)
         if 'access_token' not in data:
-            raise exceptions.AuthenticationError('Missing access_token from API')
+            raise exceptions.AuthenticationError('Missing access_token from API')  # NOQA
         now = datetime.datetime.utcnow()
         expires_in = data['expires_in']
         expiration_date = now + datetime.timedelta(0, expires_in)
@@ -319,6 +364,7 @@ class Authentication(dict):
     def access_token(self):
         return self['access_token']
 
+
 class Customer(dict):
     def __init__(self, data):
         super(Customer, self).__init__(data)
@@ -326,7 +372,6 @@ class Customer(dict):
     @classmethod
     def from_id(cls, customer_id):
         return cls({'ID': customer_id})
-
 
     @property
     def account(self):
@@ -344,6 +389,7 @@ class Customer(dict):
         if not self:
             return {}
         return {"ID": self.id, "Account": self.account, "AFile": self.afile}
+
 
 class Basket(dict):
     def __init__(self, data):
