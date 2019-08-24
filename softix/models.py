@@ -212,8 +212,17 @@ class SoftixCore(object):
         order = self._json(self._get(url, params=data), 200)
         return order
 
+    def transaction_sync(self, seller_code, from_date, to_date):
+        """Get transactions list."""
+        url = self.build_url('dcal', 'transync', from_date, to_date)
+        data = {
+            'sellerCode': seller_code
+        }
+        transactions = self._json(self._get(url, params=data), 200)
+        return transactions
+
     def performance_availabilities(self, seller_code, performance_code):
-        """Retrieve performance price availibilties."""
+        """Retrieve performance price availabilities."""
         url = self.build_url('performances', performance_code,
                              'availabilities')
         data = {'channel': 'W', 'sellerCode': seller_code}
