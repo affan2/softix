@@ -218,7 +218,7 @@ class SoftixCore(object):
         data = {
             'sellerCode': seller_code
         }
-        transactions = self._json(self._get(url, params=data), 200)
+        transactions = self._json(self._get(url, params=data), 201)
         return transactions
 
     def performance_availabilities(self, seller_code, performance_code):
