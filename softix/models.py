@@ -200,8 +200,8 @@ class SoftixCore(object):
         data = {
             'sellerCode': seller_code
         }
-        data = self._json(self._get(url, params=data), 200)
-        return Customer(data)
+        customer = self._json(self._get(url, params=data), 200)
+        return Customer(customer)
 
     def order(self, seller_code, order_id):
         """View order details."""
